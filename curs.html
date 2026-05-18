@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Studiu de Caz - Arhitectura Hațeg Alternativ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;600;700&family=Cinzel:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --auriu: #c5a059; --auriu-inchis: #a88540; --text: #222; --bg: #fff; --carbune: #111; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); background: #f9f9f9; line-height: 1.6; }
+        
+        .page { width: 210mm; min-height: 297mm; padding: 20mm; margin: 10mm auto; background: white; box-shadow: 0 0 15px rgba(0,0,0,0.1); position: relative; overflow: hidden; page-break-after: always; }
+        
+        h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--carbune); }
+        .auriu { color: var(--auriu); }
+        .tagline { font-family: 'Cinzel', serif; letter-spacing: 3px; font-size: 0.8rem; color: #888; text-transform: uppercase; }
+
+        /* COPERTĂ */
+        .cover { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2000') center/cover; color: white; padding: 0; }
+        .cover::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: linear-gradient(rgba(5, 5, 5, 0.85), rgba(5,5,5,0.95)); z-index: 1; }
+        .cover-content { position: relative; z-index: 2; padding: 44px; border: 2px solid var(--auriu); width: 85%; background: rgba(0,0,0,0.25); backdrop-filter: blur(5px); }
+        .cover h1 { color: var(--auriu); font-size: 3.8rem; font-style: italic; line-height: 1; margin: 18px 0 22px; text-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .cover p { font-size: 1.1rem; font-family: 'Inter'; font-weight: 300; margin-bottom: 28px; color: #f4f0e8; }
+        .cover .logo { font-family: 'Cinzel'; font-size: 1.05rem; letter-spacing: 5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; margin-top: 32px; }
+        .cover-pill { display: inline-block; border: 1px solid rgba(197,160,89,0.7); color: #f0dfbf; padding: 10px 16px; font-family: 'Cinzel'; letter-spacing: 3px; font-size: 0.7rem; margin-bottom: 18px; }
+
+        /* PAGINI INTERIOARE */
+        .header-page { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 30px; display: flex; justify-content: space-between; font-family: 'Cinzel'; font-size: 0.7rem; color: #aaa; }
+        .chapter-title { font-size: 2.2rem; color: var(--carbune); border-left: 5px solid var(--auriu); padding-left: 20px; margin-bottom: 30px; line-height: 1.2; }
+        .text-block { margin-bottom: 20px; font-size: 1rem; color: #444; }
+        .text-block strong { color: var(--carbune); }
+
+        .highlight-box { background: #fbf8f1; border-left: 3px solid var(--auriu); padding: 20px; margin: 30px 0; font-style: italic; color: #55

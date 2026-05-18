@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezervare | Domeniile la Buligă</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --negru: #1a1a1a; --auriu: #c5a059; --crem: #fdfcf8; }
+        body { font-family: 'Inter', sans-serif; background: var(--crem); color: var(--negru); padding: 40px 20px; line-height: 1.6; }
+        .config-container { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+        .section-title { font-weight: 700; margin: 25px 0 10px; border-bottom: 1px solid #eee; padding-bottom: 8px; color: var(--auriu); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        .input-group input { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 6px; font-family: 'Inter', sans-serif; outline: none; }
+        .night-opt { padding: 18px; border: 2px solid #eee; cursor: pointer; text-align: center; margin-bottom: 10px; font-weight: 700; transition: 0.3s; border-radius: 6px; }
+        .night-opt.active { border-color: var(--auriu); background: #fffcf5; }
+        .total-box { background: var(--negru); color: white; padding: 30px; text-align: center; margin-top: 30px; border-radius: 8px; }
+        .total-box h2 { font-size: 2.5rem; color: var(--auriu); margin: 10px 0; }
+        .btn-send { background: var(--auriu); color: white; border: none; padding: 18px; width: 100%; font-weight: 800; cursor: pointer; margin-top: 15px; border-radius: 50px; transition: 0.3s; font-size: 1rem; }
+        .btn-send:hover { background: #b48e4d; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+<div class="config-container">
+    <h2 style="text-align:center; font-family:'Playfair Display'; font-style:italic; font-size: 2rem;">Rezervare Sejur</h2>
+    <p style="text-align:center; color: #888; font-size: 0.9rem; margin-bottom: 30px;">Domeniile la Buligă - Hațeg</p>
+    
+    <div class="section-title">Date de Contact</div>
+    <div class="input-group">
+        <input type="text" id="clientName" placeholder="Numele tău complet">
+        <input type="tel" id="clientPhone" placeholder="Telefon (WhatsApp)">
+    </div>
+
+    <div class="section-title">Durată Sejur (Casa Integral)</div>
+    <div id="nopti-wrap">
+        <div class="night-opt active" onclick="setN(this, 1)">1 Noapte</div>
+        <div class="night-opt" onclick="setN(this, 2)">2 Nopți</div>
+        <div class="night-opt" onclick="setN(this, 3)">3 Nopți</div>
+    </div>
+
+    <div class="total-box">
+        <span>ESTIMARE TOTALĂ:</span>
+        <h2 id="totalDisp">2000 RON</h2>
+        <button onclick="trimiteRezervare()" id="btnSubmit" class="btn-send">TRIMITE REZERVAREA</button>
+    </div>
+</div>
+
+<script>
+    let noptiSelected = 1;
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzO-cS84CzBbtzYceD4JmsGvMjaprKMqtdnowAC_KYBZxqrbYv1I81winZjuIW2LhU/exec";
+
+    function setN(el, n) {
+        document.querySelectorAll('.night-opt').forEach(o => o.classList.remove('active'));
+        el.classList.add('active');
+        noptiSelected = n;
+        document.getElementById('totalDisp').innerText = (n * 2000) + " RON";
+    }
+
+    async function trimiteRezervare() {
+        const nume = document.getElementById('clientName').value;
+        const tel = document.getElementById('clientPhone').value;
+        
+        if(!nume || !tel) return alert("Te rugăm să completezi numele și telefonul.");
+
+        const btn = document.getElementById('btnSubmit');
+        btn.innerText = "Se salvează...";
+        btn.disabled = true;
+
+        const payload = {
+            nume: nume,
+            telefon: tel,
+            locatie: "Domeniile la Buliga",
+            checkin: new Date().toLocaleDateString('ro-RO'),
+            checkout: noptiSelected + " nopți",
+            persoane: 10,
+            total: (noptiSelected * 2000) + " RON"
+        };
+
+        try {
+            // Trimitem la Google Sheet
+            await fetch(SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            // Deschidem WhatsApp după un mic delay
+            const msg = `Bună ziua! Sunt ${nume}. Am trimis o cerere de rezervare pentru ${noptiSelected} nopți la Domenii. Total: ${payload.total}.`;
+            window.location.href = `https://wa.me/40749229686?text=${encodeURIComponent(msg)}`;
+        } catch(e) {
+            alert("A apărut o eroare. Te rugăm să încerci direct pe WhatsApp.");
+            btn.disabled = false;
+            btn.innerText = "TRIMITE REZERVAREA";
+        }
+    }
+</script>
+</body>
+</html>
