@@ -1,99 +1,272 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18106516696"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-18106516696');
+    </script>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rezervare | Domeniile la Buligă</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rezervări Sesiuni Private | Coquete</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400;1,700&family=Cinzel:wght@400;700;900&family=Inter:wght@200;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
-        :root { --negru: #1a1a1a; --auriu: #c5a059; --crem: #fdfcf8; }
-        body { font-family: 'Inter', sans-serif; background: var(--crem); color: var(--negru); padding: 40px 20px; line-height: 1.6; }
-        .config-container { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
-        .section-title { font-weight: 700; margin: 25px 0 10px; border-bottom: 1px solid #eee; padding-bottom: 8px; color: var(--auriu); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
-        .input-group input { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 6px; font-family: 'Inter', sans-serif; outline: none; }
-        .night-opt { padding: 18px; border: 2px solid #eee; cursor: pointer; text-align: center; margin-bottom: 10px; font-weight: 700; transition: 0.3s; border-radius: 6px; }
-        .night-opt.active { border-color: var(--auriu); background: #fffcf5; }
-        .total-box { background: var(--negru); color: white; padding: 30px; text-align: center; margin-top: 30px; border-radius: 8px; }
-        .total-box h2 { font-size: 2.5rem; color: var(--auriu); margin: 10px 0; }
-        .btn-send { background: var(--auriu); color: white; border: none; padding: 18px; width: 100%; font-weight: 800; cursor: pointer; margin-top: 15px; border-radius: 50px; transition: 0.3s; font-size: 1rem; }
-        .btn-send:hover { background: #b48e4d; transform: translateY(-2px); }
+        :root { 
+            --auriu: #c5a059; 
+            --roz-pudrat: #fbf4f1; 
+            --roz-accent: #f4ded6;
+            --ciocolatiu: #261c19; 
+            --fildes: #fffcfb; 
+            --text-muted: #8c7e7a; 
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { background: var(--roz-pudrat); color: var(--ciocolatiu); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.8; }
+
+        /* SCROLL BAR */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--roz-pudrat); }
+        ::-webkit-scrollbar-thumb { background: var(--auriu); border-radius: 2px; }
+
+        /* NAVIGAȚIE */
+        .site-header { position: fixed; top: 0; width: 100%; z-index: 9999; padding: 35px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 252, 251, 0.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--roz-accent); }
+        .brand-logo { font-family: 'Cinzel'; font-size: 1.5rem; font-weight: 700; color: var(--ciocolatiu); text-decoration: none; letter-spacing: 4px; }
+        .brand-logo span { color: var(--auriu); }
+        
+        .burger { cursor: pointer; z-index: 10001; display: flex; flex-direction: column; gap: 8px; padding: 10px; }
+        .burger span { display: block; width: 30px; height: 1px; background: var(--ciocolatiu); transition: 0.4s; }
+        .burger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .burger.active span:nth-child(2) { opacity: 0; }
+        .burger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        .main-nav { position: fixed; top: 0; right: -100%; height: 100vh; width: 100%; background: var(--fildes); display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s cubic-bezier(0.77, 0, 0.175, 1); z-index: 10000; }
+        .main-nav.active { right: 0; }
+        .main-nav a { font-size: 1.6rem; font-family: 'Cinzel'; margin: 15px 0; color: var(--ciocolatiu); letter-spacing: 6px; text-transform: uppercase; text-decoration: none; opacity: 0.5; transition: 0.4s; }
+        .main-nav a:hover { opacity: 1; color: var(--auriu); }
+
+        /* TIMELINE HEADER */
+        .booking-hero { padding: 180px 10% 60px; text-align: center; background: var(--fildes); }
+        .booking-hero span { font-family: 'Cinzel'; color: var(--auriu); letter-spacing: 6px; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 15px; }
+        .booking-hero h1 { font-family: 'Playfair Display'; font-size: clamp(2.2rem, 5vw, 3.8rem); font-style: italic; font-weight: 400; color: var(--ciocolatiu); }
+
+        /* FORM CONTEXT */
+        .booking-section { padding: 40px 10% 120px; background: var(--fildes); display: flex; justify-content: center; }
+        .form-wrapper { width: 100%; max-width: 700px; background: var(--roz-pudrat); padding: 60px; border-radius: 30px; border: 1px solid var(--roz-accent); box-shadow: 0 30px 60px rgba(38, 28, 25, 0.03); }
+
+        .form-group { margin-bottom: 30px; display: flex; flex-direction: column; }
+        .form-group label { font-family: 'Cinzel'; font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; margin-bottom: 10px; color: var(--ciocolatiu); }
+        
+        .form-group input, .form-group select { 
+            padding: 18px 25px; 
+            border: 1px solid var(--roz-accent); 
+            background: var(--fildes); 
+            border-radius: 12px; 
+            font-family: 'Inter', sans-serif; 
+            font-size: 1rem; 
+            color: var(--ciocolatiu); 
+            outline: none; 
+            transition: 0.3s ease; 
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--auriu); box-shadow: 0 0 10px rgba(197, 160, 89, 0.1); }
+
+        .dateTime-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        /* CUSTOM NOTIFICATION INSIDE FORM */
+        .info-note { font-size: 0.85rem; color: var(--auriu); font-style: italic; margin-top: 5px; font-weight: 500; }
+
+        /* BUTTONS */
+        .btn-submit { 
+            width: 100%; 
+            padding: 22px; 
+            background: var(--ciocolatiu); 
+            color: var(--fildes); 
+            font-family: 'Cinzel'; 
+            border: none; 
+            border-radius: 50px; 
+            letter-spacing: 3px; 
+            font-size: 0.9rem; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: 0.4s; 
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(38,28,25,0.15);
+        }
+        .btn-submit:hover { background: var(--auriu); transform: translateY(-2px); box-shadow: 0 15px 30px rgba(197, 160, 89, 0.3); }
+
+        /* SUCCESS MESSAGE HOLDER */
+        .success-message { display: none; text-align: center; padding: 20px; }
+        .success-message i { font-size: 3.5rem; color: var(--auriu); margin-bottom: 20px; }
+        .success-message h2 { font-family: 'Playfair Display'; font-size: 2.2rem; font-style: italic; margin-bottom: 15px; font-weight: 400; }
+        .success-message p { color: var(--text-muted); font-size: 1.1rem; }
+
+        /* FOOTER */
+        footer { padding: 80px 10% 50px; background: var(--fildes); border-top: 1px solid var(--roz-accent); text-align: center; }
+        .cui-info { font-family: 'Cinzel'; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 3px; margin-top: 35px; border-top: 1px solid var(--roz-accent); padding-top: 35px; line-height: 1.6; }
+
+        @media (max-width: 768px) {
+            .form-wrapper { padding: 35px 20px; border-radius: 20px; }
+            .dateTime-row { grid-template-columns: 1fr; gap: 0; }
+            .booking-hero { padding: 140px 5% 40px; }
+            .booking-section { padding: 20px 5% 80px; }
+        }
+
+        .wa-float { position: fixed; bottom: 40px; left: 40px; color: var(--auriu); font-size: 38px; z-index: 9999; opacity: 0.8; }
     </style>
 </head>
 <body>
 
-<div class="config-container">
-    <h2 style="text-align:center; font-family:'Playfair Display'; font-style:italic; font-size: 2rem;">Rezervare Sejur</h2>
-    <p style="text-align:center; color: #888; font-size: 0.9rem; margin-bottom: 30px;">Domeniile la Buligă - Hațeg</p>
-    
-    <div class="section-title">Date de Contact</div>
-    <div class="input-group">
-        <input type="text" id="clientName" placeholder="Numele tău complet">
-        <input type="tel" id="clientPhone" placeholder="Telefon (WhatsApp)">
-    </div>
+    <a href="https://wa.me/40749229686" class="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
-    <div class="section-title">Durată Sejur (Casa Integral)</div>
-    <div id="nopti-wrap">
-        <div class="night-opt active" onclick="setN(this, 1)">1 Noapte</div>
-        <div class="night-opt" onclick="setN(this, 2)">2 Nopți</div>
-        <div class="night-opt" onclick="setN(this, 3)">3 Nopți</div>
-    </div>
+    <header class="site-header">
+        <a href="index.html" class="brand-logo">COQUETE<span>.</span></a>
+        <div class="burger" id="burger"><span></span><span></span><span></span></div>
+        <nav class="main-nav" id="nav-links">
+            <a href="index.html#concept">Poveste</a>
+            <a href="rezervari.html">Rezervări</a>
+            <a href="curs.html">Masterclass</a>
+            <a href="index.html#portofoliu">Portofoliu</a>
+            <a href="index.html#recenzii">Aprecieri</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
 
-    <div class="total-box">
-        <span>ESTIMARE TOTALĂ:</span>
-        <h2 id="totalDisp">2000 RON</h2>
-        <button onclick="trimiteRezervare()" id="btnSubmit" class="btn-send">TRIMITE REZERVAREA</button>
-    </div>
-</div>
+    <section class="booking-hero">
+        <span>EXCLUSIVITATE</span>
+        <h1>Rezervă o Sesiune Privată</h1>
+    </section>
 
-<script>
-    let noptiSelected = 1;
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzO-cS84CzBbtzYceD4JmsGvMjaprKMqtdnowAC_KYBZxqrbYv1I81winZjuIW2LhU/exec";
+    <section class="booking-section">
+        <div class="form-wrapper">
+            
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="nume">Nume Complet</label>
+                    <input type="text" id="nume" name="nume" required placeholder="Ex: Simona Popescu">
+                </div>
 
-    function setN(el, n) {
-        document.querySelectorAll('.night-opt').forEach(o => o.classList.remove('active'));
-        el.classList.add('active');
-        noptiSelected = n;
-        document.getElementById('totalDisp').innerText = (n * 2000) + " RON";
-    }
+                <div class="form-group">
+                    <label for="telefon">Număr Telefon</label>
+                    <input type="tel" id="telefon" name="telefon" required placeholder="Ex: 07xx xxx xxx">
+                </div>
 
-    async function trimiteRezervare() {
-        const nume = document.getElementById('clientName').value;
-        const tel = document.getElementById('clientPhone').value;
-        
-        if(!nume || !tel) return alert("Te rugăm să completezi numele și telefonul.");
+                <div class="form-group">
+                    <label for="email">Adresă Email</label>
+                    <input type="email" id="email" name="email" required placeholder="Ex: nume@email.com">
+                </div>
 
-        const btn = document.getElementById('btnSubmit');
-        btn.innerText = "Se salvează...";
-        btn.disabled = true;
+                <div class="form-group">
+                    <label for="serviciu">Serviciu Solicitat</label>
+                    <select id="serviciu" name="serviciu" required>
+                        <option value="" disabled selected>Selectează serviciul...</option>
+                        <option value="Sesiune Privată Eveniment">Sesiune Privată Eveniment (Machiaj Bridal/Gala)</option>
+                        <option value="Curs Automachiaj Individual">The Self-Portrait Experience (Curs Automachiaj)</option>
+                        <option value="Masterclass Pro-Artist">Pro-Artist Specialization (Masterclass)</option>
+                    </select>
+                </div>
 
-        const payload = {
-            nume: nume,
-            telefon: tel,
-            locatie: "Domeniile la Buliga",
-            checkin: new Date().toLocaleDateString('ro-RO'),
-            checkout: noptiSelected + " nopți",
-            persoane: 10,
-            total: (noptiSelected * 2000) + " RON"
-        };
+                <div class="dateTime-row">
+                    <div class="form-group">
+                        <label for="data">Data Solicitată</label>
+                        <input type="date" id="data" name="data" required>
+                        <span class="info-note">*Doar zile de weekend (Sâm / Dum)</span>
+                    </div>
 
-        try {
-            // Trimitem la Google Sheet
-            await fetch(SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
+                    <div class="form-group">
+                        <label for="ora">Ora</label>
+                        <select id="ora" name="ora" required>
+                            <option value="" disabled selected>Alege intervalul...</option>
+                            <option value="08:00">08:00 AM</option>
+                            <option value="10:30">10:30 AM</option>
+                            <option value="13:00">13:00 PM</option>
+                            <option value="15:30">15:30 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">TRIMITE SOLICITAREA</button>
+            </form>
+
+            <div class="success-message" id="successBlock">
+                <i class="linearicons-heart-pulse fas fa-star"></i>
+                <h2>Vă mulțumim.</h2>
+                <p>Solicitarea dumneavoastră a fost înregistrată cu rânduială. Bianca o va analiza și vă va contacta în cel mai scurt timp pentru confirmarea locului.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logos">
+            <a href="https://anpc.ro/ce-este-sal/" target="_blank"><img src="./anpc-sal.png" alt="SAL" style="height:40px; margin-right:20px;"></a>
+            <a href="https://anpc.ro/" target="_blank"><img src="./anpc-sol.png" alt="SOL" style="height:40px;"></a>
+        </div>
+        <div class="cui-info">
+            COQUETE BEAUTY STUDIO | ARTISTRY & HARMONY CONCEPT<br>
+            STUDIO: PĂCLIȘA, HUNEDOARA • REZERVARE EXCLUSIVĂ DE WEEKEND
+        </div>
+    </footer>
+
+    <script>
+        const burger = document.getElementById('burger');
+        const nav = document.getElementById('nav-links');
+        burger.onclick = () => { nav.classList.toggle('active'); burger.classList.toggle('active'); };
+        nav.onclick = () => { nav.classList.remove('active'); burger.classList.remove('active'); };
+
+        // VALIDARE DOAR WEEKEND-URI (SAMBATA SI DUMINICA)
+        const dateInput = document.getElementById('data');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today; // Blocare date din trecut
+
+        dateInput.addEventListener('change', function() {
+            const dateParts = this.value.split('-');
+            // Reconstrucție locală precisă anti-timezone offset: new Date(an, luna-1, zi)
+            const chosenDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+            const dayOfWeek = chosenDate.getDay(); // 0 = Duminică, 6 = Sâmbătă
+
+            if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+                alert('Sesiunile private Coquete sunt disponibile exclusiv în weekend (Sâmbătă și Duminică). Vă rugăm să alegeți o zi corespunzătoare.');
+                this.value = ''; // Resetează inputul gol
+            }
+        });
+
+        // EXPEDIEREA DATELOR CĂTRE AUTOMATIZAREA MAKE
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "SE TRIMITE...";
+            submitBtn.disabled = true;
+
+            const formData = new FormData(this);
+            const formObject = {};
+            formData.forEach((value, key) => formObject[key] = value);
+
+            /* IMPORTANT: Înlocuiește linkul de mai jos cu LINKUL WEBHOOK-ULUI tău generat din Make!
+            */
+            const makeWebhookUrl = 'https://hook.eu1.make.com/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'; 
+
+            fetch(makeWebhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formObject)
+            })
+            .then(response => {
+                document.getElementById('bookingForm').style.display = 'none';
+                document.getElementById('successBlock').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('A apărut o mică eroare la server. Vă rugăm să încercați din nou sau să ne contactați pe WhatsApp.');
+                submitBtn.innerText = "TRIMITE SOLICITAREA";
+                submitBtn.disabled = false;
             });
-
-            // Deschidem WhatsApp după un mic delay
-            const msg = `Bună ziua! Sunt ${nume}. Am trimis o cerere de rezervare pentru ${noptiSelected} nopți la Domenii. Total: ${payload.total}.`;
-            window.location.href = `https://wa.me/40749229686?text=${encodeURIComponent(msg)}`;
-        } catch(e) {
-            alert("A apărut o eroare. Te rugăm să încerci direct pe WhatsApp.");
-            btn.disabled = false;
-            btn.innerText = "TRIMITE REZERVAREA";
-        }
-    }
-</script>
+        });
+    </script>
 </body>
 </html>
