@@ -75,13 +75,13 @@
         .chapter-text { flex: 1; padding: 20px 0; }
         .chapter-text span { font-family: 'Cinzel'; color: var(--auriu); font-size: 0.8rem; letter-spacing: 4px; display: block; margin-bottom: 20px; font-weight: 700; }
         .chapter-text h2 { font-family: 'Playfair Display'; font-size: clamp(2.2rem, 4vw, 3.8rem); font-style: italic; color: var(--ciocolatiu); line-height: 1.15; margin-bottom: 25px; font-weight: 400; }
-        .chapter-text p { color: var(--text-muted); font-size: 1.15rem; margin-bottom: 40px; font-weight: 300; text-align: justify; }
+        .chapter-text p { color: var(--text-muted); font-size: 1.15rem; margin-bottom: 40px; font-weight: 300; text-align: left; }
         
-        /* BUTOANE SIMETRICE ȘI CURATE */
+        /* BUTOANE */
         .btn-mag { display: inline-block; padding: 20px 45px; background: var(--ciocolatiu); color: var(--fildes); font-family: 'Cinzel'; text-decoration: none; border-radius: 50px; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700; transition: 0.4s; text-align: center; box-shadow: 0 10px 20px rgba(38, 28, 25, 0.15); }
         .btn-mag:hover { transform: translateY(-4px); background: var(--auriu); color: var(--fildes); box-shadow: 0 15px 30px rgba(197, 160, 89, 0.3); }
 
-        /* REVIEWS / TESTIMONIALS SECTION - SPAȚIU EDITORIAL CURAT */
+        /* REVIEWS / TESTIMONIALS SECTION */
         .reviews-section { padding: 120px 10%; background: var(--fildes); border-bottom: 1px solid rgba(244, 222, 214, 0.5); text-align: center; }
         .reviews-header { max-width: 700px; margin: 0 auto 60px; }
         .reviews-header span { font-family: 'Cinzel'; color: var(--auriu); font-size: 0.8rem; letter-spacing: 5px; display: block; margin-bottom: 15px; font-weight: 700; }
@@ -107,11 +107,20 @@
         .cui-info { font-family: 'Cinzel'; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 3px; margin-top: 35px; border-top: 1px solid var(--roz-accent); padding-top: 35px; line-height: 1.6; }
         .tribute { font-family: 'Cinzel'; color: var(--roz-accent); font-size: 0.65rem; letter-spacing: 10px; margin-top: 30px; display: block; text-align: center; font-weight: 700; }
 
+        /* RESPONSIVE MEDIA QUERIES OPTIMIZATE ANTI-CRĂCĂNARE ȘI CORECTARE POZIȚIE IMAGINE */
         @media (max-width: 1100px) {
-            .chapter, .chapter:nth-child(even) { flex-direction: column; text-align: center; gap: 50px; padding: 90px 5%; }
-            .chapter-media { width: 100%; height: 450px; }
-            .chapter-media img { height: 450px; }
-            .chapter-text h2 { font-size: 2.8rem; }
+            .site-header { padding: 25px 5%; }
+            .hero { padding: 0 5%; }
+            .hero-content { padding-left: 25px; }
+            
+            /* Pune poza SUS pe mobil și textul sub ea, cu aliniere curată pe centru */
+            .chapter, .chapter:nth-child(even) { flex-direction: column-reverse; text-align: center; gap: 40px; padding: 80px 5%; }
+            .chapter-media { width: 100%; height: auto; max-height: 450px; }
+            .chapter-media img { height: 400px; width: 100%; }
+            .chapter-text { padding: 10px 0; }
+            .chapter-text h2 { font-size: 2.6rem; }
+            .chapter-text p { text-align: center; font-size: 1.1rem; margin-bottom: 30px; }
+            
             .footer-grid { flex-direction: column; align-items: center; text-align: center; }
             .legal-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
             .legal-links a { margin-right: 0; }
@@ -130,7 +139,7 @@
         <div class="burger" id="burger"><span></span><span></span><span></span></div>
         <nav class="main-nav" id="nav-links">
             <a href="#concept">Poveste</a>
-            <a href="#weekend">Weekend Exclusiv</a>
+            <a href="#weekend">Sesiuni Private</a>
             <a href="#academy">Masterclass</a>
             <a href="#portofoliu">Portofoliu</a>
             <a href="#recenzii">Aprecieri</a>
@@ -141,7 +150,7 @@
         <div class="hero-content">
             <span class="tagline">BIANCA IACOBONI ARTISTRY</span>
             <h1>Versiunea ta cea mai bună.</h1>
-            <p style="font-family:'Cinzel'; opacity: 0.9; letter-spacing: 8px; font-size: 0.9rem; color: var(--auriu);">WEEKEND CONCEPT • PĂCLIȘA</p>
+            <p style="font-family:'Cinzel'; opacity: 0.9; letter-spacing: 8px; font-size: 0.9rem; color: var(--auriu);">WEEKEND CONCEPT • EXCLUSIVE STUDIO</p>
         </div>
     </section>
 
@@ -165,8 +174,8 @@
             </div>
             <div class="chapter-text">
                 <span>CHAPTER 02 / EXCLUSIVITATE</span>
-                <h2>Weekend la Păclișa.</h2>
-                <p>Locuri strict limitate pentru evenimente remarcabile. Un serviciu premium de beauty, dedicat mireselor și femeilor care refuză compromisurile. O sesiune privată unde timpul se oprește, iar machiajul tău devine o operă de artă rezistentă și impecabilă.</p>
+                <h2>Sesiuni Private.</h2>
+                <p>Locuri strict limitate pentru evenimente remarcabile. Un serviciu premium de beauty, dedicat mireselor și femeilor care refuză compromisurile. O întâlnire exclusivă în care timpul se oprește, iar machiajul tău devine o operă de artă rezistentă și impecabilă.</p>
                 <a href="https://wa.me/40749229686" class="btn-mag">REZERVĂ UN LOC</a>
             </div>
         </section>
