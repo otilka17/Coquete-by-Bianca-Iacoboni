@@ -60,8 +60,9 @@
         .main-nav a { font-size: 1.5rem; font-family: 'Cinzel'; margin: 12px 0; color: var(--ciocolatiu); letter-spacing: 5px; text-transform: uppercase; text-decoration: none; opacity: 0.6; transition: 0.4s; text-align: center; }
         .main-nav a:hover { opacity: 1; color: var(--auriu); transform: scale(1.03); }
 
-        /* HERO EDITORIAL - ANTI-TĂIERE CHIP PE PC */
-        .hero { height: 100vh; position: relative; display: flex; flex-direction: column; justify-content: center; padding: 0 5%; overflow: hidden; background: var(--roz-pudrat); }
+        /* HERO INTEGRAL ȘI COMPATIBIL CU COPERTĂ AUTOMATĂ */
+        .hero { height: 100vh; position: relative; display: flex; flex-direction: column; justify-content: center; padding: 0 5%; overflow: hidden; background: var(--fildes); }
+        
         .hero-slideshow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
         
         .slide-bg { 
@@ -71,30 +72,31 @@
             background-size: cover; 
             background-position: center top; 
             opacity: 0; 
+            transition: opacity 1s ease-in-out;
             animation: ambientCrossfade 15s infinite ease-in-out; 
         }
         
-        .slide-bg:nth-child(1) { background-image: url('./17791736843363263785112587558072_22d952.jpg'); }
+        /* Definirea corectă a ordinii imaginilor și a timpilor de loop */
+        .slide-bg:nth-child(1) { background-image: url('./17791736843363263785112587558072_22d952.jpg'); animation-delay: 0s; }
         .slide-bg:nth-child(2) { background-image: url('./17791736717924888662169254630015_22d94a.jpg'); animation-delay: 5s; }
         .slide-bg:nth-child(3) { background-image: url('./IMG_20260518_100615.jpg'); animation-delay: 10s; }
 
         @keyframes ambientCrossfade {
-            0% { opacity: 0; transform: scale(1.03); }
+            0% { opacity: 0; }
             10% { opacity: 1; }
             33% { opacity: 1; }
-            43% { opacity: 0; transform: scale(1.00); }
+            43% { opacity: 0; }
             100% { opacity: 0; }
         }
 
         .hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(251, 244, 241, 0.4) 0%, rgba(251, 244, 241, 0.95) 90%); z-index: 1; }
         .hero-content { position: relative; z-index: 2; max-width: 600px; border-left: 2px solid var(--auriu); padding: 15px 0 15px 25px; margin-top: auto; margin-bottom: 80px; }
 
-        /* SPLIT SCREEN LOGIC PENTRU DESKTOP EXPERT */
+        /* SPLIT SCREEN PENTRU LAPTOP ȘI PC ANTI-DEFORMARE */
         @media (min-width: 1024px) {
             .hero { flex-direction: row; align-items: center; justify-content: space-between; padding: 0 10%; background: var(--fildes); }
             .hero-slideshow { width: 50%; right: 0; left: auto; height: 100vh; }
-            .slide-bg { background-position: center center; }
-            .hero::after { background: linear-gradient(to right, rgba(255, 252, 251, 1) 45%, rgba(255, 252, 251, 0.1) 60%); width: 100%; }
+            .hero::after { background: linear-gradient(to right, rgba(255, 252, 251, 1) 42%, rgba(255, 252, 251, 0.1) 60%); width: 100%; left: 0; top: 0; }
             .hero-content { margin-top: 0; margin-bottom: 0; max-width: 500px; padding: 30px 0 30px 40px; }
         }
 
@@ -107,7 +109,7 @@
         .splash-separator img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.1) opacity(0.8); transition: 1.2s cubic-bezier(0.25, 1, 0.3, 1); }
         .splash-separator:hover img { filter: grayscale(0) opacity(1); transform: scale(1.02); }
 
-        /* CORP EDITORIAL MAGZINE STYLE */
+        /* CORP EDITORIAL MAGAZINE STYLE */
         .magazine-body { background: var(--fildes); }
         .chapter { padding: 60px 5%; display: flex; flex-direction: column; align-items: center; gap: 35px; border-bottom: 1px solid rgba(244, 222, 214, 0.4); opacity: 0; transform: translateY(25px); transition: opacity 1s cubic-bezier(0.25, 1, 0.3, 1), transform 1s cubic-bezier(0.25, 1, 0.3, 1); }
         .chapter.revealed { opacity: 1; transform: translateY(0); }
@@ -123,7 +125,7 @@
         .btn-mag { display: inline-block; padding: 16px 35px; background: var(--ciocolatiu); color: var(--fildes); font-family: 'Cinzel'; text-decoration: none; border-radius: 50px; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700; transition: 0.4s ease; text-align: center; }
         .btn-mag:hover { transform: translateY(-2px); background: var(--auriu); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.15); }
 
-        /* DESKTOP RE-PROPORȚIONARE TOTALĂ CU GRID ADAPTIV */
+        /* MULTI-DEVICE GRID PROPORTIONS */
         @media (min-width: 1024px) {
             .chapter { padding: 100px 12%; flex-direction: row; gap: 100px; }
             .chapter:nth-child(even) { flex-direction: row-reverse; background: var(--roz-pudrat); }
@@ -257,6 +259,7 @@
 
     <section class="signature-section">
         <div class="profile-img">
+            <div class="elfsight-app-3b02c58c-e516-4340-9a57-45342cacc2d4" data-elfsight-app-lazy style="display:none;"></div>
             <img src="./17791736717924888662169254630015_22d94a.jpg" alt="Bianca Iacoboni Portret Oficial">
         </div>
         <p class="quote">"Machiajul nu este despre a te ascunde în spatele unei măști, ci despre rânduiala și armonia care îți scot la lumină încrederea interioară."</p>
