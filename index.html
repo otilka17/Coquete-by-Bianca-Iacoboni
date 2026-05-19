@@ -60,7 +60,7 @@
         .main-nav a { font-size: 1.5rem; font-family: 'Cinzel'; margin: 12px 0; color: var(--ciocolatiu); letter-spacing: 5px; text-transform: uppercase; text-decoration: none; opacity: 0.6; transition: 0.4s; text-align: center; }
         .main-nav a:hover { opacity: 1; color: var(--auriu); transform: scale(1.03); }
 
-        /* HERO - COPERTĂ AUTOMATĂ INTELIGENTĂ */
+        /* HERO - SLIDESHOW ORIGINAL CU JAVASCRIPT REZISTENT */
         .hero { height: 100vh; position: relative; display: flex; flex-direction: column; justify-content: center; padding: 0 5%; overflow: hidden; background: var(--roz-pudrat); }
         
         .hero-slideshow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
@@ -80,7 +80,6 @@
         .hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(251, 244, 241, 0.3) 0%, rgba(251, 244, 241, 0.95) 90%); z-index: 1; }
         .hero-content { position: relative; z-index: 2; max-width: 600px; border-left: 2px solid var(--auriu); padding: 15px 0 15px 25px; margin-top: auto; margin-bottom: 80px; }
 
-        /* FORMATUL SPLIT-SCREEN SPECIAL PENTRU LAPTOP ȘI MONITOARE MARI */
         @media (min-width: 1024px) {
             .hero { flex-direction: row; align-items: center; justify-content: space-between; padding: 0 10%; background: var(--fildes); }
             .hero-slideshow { width: 50%; right: 0; left: auto; height: 100vh; }
@@ -114,7 +113,6 @@
         .btn-mag { display: inline-block; padding: 16px 35px; background: var(--ciocolatiu); color: var(--fildes); font-family: 'Cinzel'; text-decoration: none; border-radius: 50px; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700; transition: 0.4s ease; text-align: center; }
         .btn-mag:hover { transform: translateY(-2px); background: var(--auriu); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.15); }
 
-        /* DIMENSIUNI GRID LAPTOP ȘI DESKTOP */
         @media (min-width: 1024px) {
             .chapter { padding: 100px 12%; flex-direction: row; gap: 100px; }
             .chapter:nth-child(even) { flex-direction: row-reverse; background: var(--roz-pudrat); }
@@ -170,7 +168,7 @@
     <section class="hero">
         <div class="hero-slideshow">
             <div class="slide-bg active" style="background-image: url('./17791736843363263785112587558072_22d952.jpg');"></div>
-            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1200');"></div>
+            <div class="slide-bg" style="background-image: url('./17791736717924888662169254630015_22d94a.jpg');"></div>
             <div class="slide-bg" style="background-image: url('./IMG_20260518_100615.jpg');"></div>
         </div>
         <div class="hero-content">
@@ -200,7 +198,7 @@
 
         <section class="chapter" id="weekend">
             <div class="chapter-media">
-                <img src="./17791736843363263785112587558072_22d952.jpg" alt="Sesiuni machiaj de top ochi inchisi">
+                <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=1200" alt="Sesiuni machiaj ochi premium detalii fine">
             </div>
             <div class="chapter-text">
                 <span>CHAPTER 02 / EXCLUSIVITATE</span>
@@ -212,7 +210,7 @@
 
         <section class="chapter" id="academy">
             <div class="chapter-media">
-                <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=1200" alt="Masterclass Automachiaj Premium">
+                <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1200" alt="Masterclass Automachiaj Premium Concept">
             </div>
             <div class="chapter-text">
                 <span>CHAPTER 03 / EDUCAȚIE</span>
@@ -248,7 +246,7 @@
 
     <section class="signature-section">
         <div class="profile-img">
-            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1200" alt="Bianca Iacoboni Artistry Selection">
+            <img src="./17791736717924888662169254630015_22d94a.jpg" alt="Bianca Iacoboni Portret Oficial">
         </div>
         <p class="quote">"Machiajul nu este despre a te ascunde în spatele unei măști, ci despre rânduiala și armonia care îți scot la lumină încrederea interioară."</p>
         <p class="name-label">BIANCA IACOBONI</p>
@@ -304,7 +302,7 @@
             else header.classList.remove('scrolled');
         };
 
-        // Intersection Observer pentru apariții fluide la scroll
+        // Intersection Observer pentru efectele de apariție fluidă
         const revealElements = document.querySelectorAll('.chapter, .reviews-section');
         const revealOnScroll = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
