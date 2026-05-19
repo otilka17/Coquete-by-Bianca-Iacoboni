@@ -15,6 +15,8 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400;1,700&family=Cinzel:wght@400;700;900&family=Inter:wght@200;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://elfsightcdn.com/platform.js" async></script>
 
     <style>
         :root { 
@@ -24,37 +26,47 @@
             --ciocolatiu: #261c19; 
             --fildes: #fffcfb; 
             --text-muted: #8c7e7a; 
+            --desktop-margin: 8%;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        body { background: var(--roz-pudrat); color: var(--ciocolatiu); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.8; }
+        body { background: var(--roz-pudrat); color: var(--ciocolatiu); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.7; font-size: 16px; }
 
         /* SCROLL BAR */
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: var(--roz-pudrat); }
         ::-webkit-scrollbar-thumb { background: var(--auriu); border-radius: 2px; }
 
-        /* NAVIGAȚIE PREMIUM */
-        .site-header { position: fixed; top: 0; width: 100%; z-index: 9999; padding: 35px 5%; display: flex; justify-content: space-between; align-items: center; transition: 0.5s ease; }
-        .site-header.scrolled { background: rgba(255, 252, 251, 0.96); padding: 20px 5%; backdrop-filter: blur(10px); border-bottom: 1px solid var(--roz-accent); }
+        /* NAVIGAȚIE PREMIUM RECEPTIVĂ */
+        .site-header { position: fixed; top: 0; width: 100%; z-index: 9999; padding: 25px 5%; display: flex; justify-content: space-between; align-items: center; transition: 0.5s ease; background: rgba(251, 244, 241, 0.9); backdrop-filter: blur(5px); }
         
-        .brand-logo { font-family: 'Cinzel'; font-size: 1.5rem; font-weight: 700; color: var(--ciocolatiu); text-decoration: none; letter-spacing: 4px; }
+        @media (min-width: 1024px) {
+            .site-header { padding: 30px var(--desktop-margin); }
+        }
+        
+        .site-header.scrolled { background: rgba(255, 252, 251, 0.96); padding: 15px 5%; border-bottom: 1px solid var(--roz-accent); }
+        
+        .brand-logo { font-family: 'Cinzel'; font-size: 1.4rem; font-weight: 700; color: var(--ciocolatiu); text-decoration: none; letter-spacing: 4px; z-index: 10001; }
         .brand-logo span { color: var(--auriu); }
         
-        .burger { cursor: pointer; z-index: 10001; display: flex; flex-direction: column; gap: 8px; padding: 10px; }
-        .burger span { display: block; width: 30px; height: 1px; background: var(--ciocolatiu); transition: 0.4s; }
+        .burger { cursor: pointer; z-index: 10001; display: flex; flex-direction: column; gap: 7px; padding: 10px; }
+        .burger span { display: block; width: 28px; height: 1px; background: var(--ciocolatiu); transition: 0.4s; }
         .burger.active span { background: var(--auriu); }
-        .burger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .burger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
         .burger.active span:nth-child(2) { opacity: 0; }
-        .burger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+        .burger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-        .main-nav { position: fixed; top: 0; right: -100%; height: 100vh; width: 100%; background: var(--fildes); display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s cubic-bezier(0.77, 0, 0.175, 1); z-index: 10000; }
+        .main-nav { position: fixed; top: 0; right: -100%; height: 100vh; width: 100%; background: var(--fildes); display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s cubic-bezier(0.77, 0, 0.175, 1); z-index: 10000; padding: 20px; }
         .main-nav.active { right: 0; }
-        .main-nav a { font-size: 1.6rem; font-family: 'Cinzel'; margin: 15px 0; color: var(--ciocolatiu); letter-spacing: 6px; text-transform: uppercase; text-decoration: none; opacity: 0.5; transition: 0.4s; }
-        .main-nav a:hover { opacity: 1; color: var(--auriu); transform: scale(1.05); }
+        .main-nav a { font-size: 1.5rem; font-family: 'Cinzel'; margin: 12px 0; color: var(--ciocolatiu); letter-spacing: 5px; text-transform: uppercase; text-decoration: none; opacity: 0.6; transition: 0.4s; text-align: center; }
+        .main-nav a:hover { opacity: 1; color: var(--auriu); transform: scale(1.03); }
 
-        /* HERO CU LOOP AMBIENTAL DE IMAGINI VIVE */
-        .hero { height: 100vh; position: relative; display: flex; align-items: center; padding: 0 10%; overflow: hidden; background: var(--ciocolatiu); }
+        /* HERO CU LOOP AMBIENTAL AUTONOM */
+        .hero { height: 100vh; position: relative; display: flex; align-items: center; padding: 0 5%; overflow: hidden; background: var(--ciocolatiu); }
+        
+        @media (min-width: 1024px) {
+            .hero { padding: 0 var(--desktop-margin); }
+        }
         
         .hero-slideshow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
         
@@ -68,118 +80,161 @@
             animation: ambientCrossfade 15s infinite ease-in-out; 
         }
         
-        /* Integrarea celor 3 poze cheie în loop-ul automat de fundal */
         .slide-bg:nth-child(1) { background-image: url('./IMG_20260518_100643.jpg'); animation-delay: 0s; }
         .slide-bg:nth-child(2) { background-image: url('./IMG_20260518_095949.jpg'); animation-delay: 5s; }
         .slide-bg:nth-child(3) { background-image: url('./IMG_20260518_100615.jpg'); animation-delay: 10s; }
 
         @keyframes ambientCrossfade {
-            0% { opacity: 0; transform: scale(1.06); filter: blur(3px); }
+            0% { opacity: 0; transform: scale(1.05); filter: blur(2px); }
             10% { opacity: 1; filter: blur(0); }
             33% { opacity: 1; }
             43% { opacity: 0; transform: scale(1.00); }
             100% { opacity: 0; }
         }
 
-        .hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to right, rgba(251, 244, 241, 0.93) 35%, rgba(251, 244, 241, 0.2)); z-index: 1; }
+        .hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to right, rgba(251, 244, 241, 0.95) 30%, rgba(251, 244, 241, 0.1)); z-index: 1; }
         
-        .hero-content { position: relative; z-index: 2; max-width: 850px; border-left: 2px solid var(--auriu); padding: 20px 0 20px 50px; }
-        .hero h1 { font-family: 'Playfair Display'; font-size: clamp(3rem, 8vw, 6rem); font-style: italic; color: var(--ciocolatiu); line-height: 1.05; margin-bottom: 25px; font-weight: 400; }
-        .tagline { font-family: 'Cinzel'; color: var(--auriu); letter-spacing: 10px; font-size: 0.8rem; display: block; margin-bottom: 15px; font-weight: 700; text-transform: uppercase; }
+        .hero-content { position: relative; z-index: 2; max-width: 600px; border-left: 2px solid var(--auriu); padding: 20px 0 20px 30px; }
+        
+        @media (min-width: 1024px) {
+            .hero-content { max-width: 800px; padding: 25px 0 25px 50px; }
+        }
+        
+        .hero h1 { font-family: 'Playfair Display'; font-size: clamp(2.2rem, 6vw, 4.5rem); font-style: italic; color: var(--ciocolatiu); line-height: 1.1; margin-bottom: 20px; font-weight: 400; }
+        .tagline { font-family: 'Cinzel'; color: var(--auriu); letter-spacing: 8px; font-size: 0.75rem; display: block; margin-bottom: 12px; font-weight: 700; text-transform: uppercase; }
 
-        /* SPLASH SEPARATOR INTERACTIV */
-        .splash-separator { width: 100%; height: 350px; overflow: hidden; border-top: 1px solid var(--roz-accent); border-bottom: 1px solid var(--roz-accent); background-color: var(--fildes); display: flex; align-items: center; justify-content: center; }
-        .splash-separator img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.1) opacity(0.85); transition: 1.2s cubic-bezier(0.25, 1, 0.3, 1); }
+        /* SPLASH SEPARATOR INTERACTIV RECEPTIV */
+        .splash-separator { width: 100%; height: 250px; overflow: hidden; border-top: 1px solid var(--roz-accent); border-bottom: 1px solid var(--roz-accent); background-color: var(--fildes); display: flex; align-items: center; justify-content: center; }
+        
+        @media (min-width: 1024px) {
+            .splash-separator { height: 350px; }
+        }
+        
+        .splash-separator img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.1) opacity(0.8); transition: 1.2s cubic-bezier(0.25, 1, 0.3, 1); }
         .splash-separator:hover img { filter: grayscale(0) opacity(1); transform: scale(1.03); }
 
-        /* CORP EDITORIAL - SECTIUNI CU EFECT REVEAL */
+        /* CORP EDITORIAL - SECTIUNI CU GRID PE DESKTOP */
         .magazine-body { background: var(--fildes); }
-        .chapter { padding: 140px 10%; display: flex; align-items: center; gap: 80px; border-bottom: 1px solid rgba(244, 222, 214, 0.5); opacity: 0; transform: translateY(40px); transition: opacity 1.2s cubic-bezier(0.25, 1, 0.3, 1), transform 1.2s cubic-bezier(0.25, 1, 0.3, 1); }
+        .chapter { padding: 80px 5%; display: flex; flex-direction: column; align-items: center; gap: 40px; border-bottom: 1px solid rgba(244, 222, 214, 0.4); opacity: 0; transform: translateY(30px); transition: opacity 1.2s cubic-bezier(0.25, 1, 0.3, 1), transform 1.2s cubic-bezier(0.25, 1, 0.3, 1); }
+        
+        @media (min-width: 1024px) {
+            .chapter { padding: 120px var(--desktop-margin); flex-direction: row; gap: 80px; text-align: left; align-items: center; }
+            .chapter:nth-child(even) { flex-direction: row-reverse; background: var(--roz-pudrat); }
+        }
+        
         .chapter.revealed { opacity: 1; transform: translateY(0); }
-        .chapter:nth-child(even) { flex-direction: row-reverse; background: var(--roz-pudrat); }
 
-        .chapter-media { flex: 1.2; background: var(--fildes); border-radius: 30px; overflow: hidden; box-shadow: 0 35px 70px rgba(38, 28, 25, 0.04); }
-        .chapter-media img { width: 100%; height: 600px; display: block; object-fit: cover; transform: scale(1.1); filter: blur(3px); transition: transform 2s cubic-bezier(0.25, 1, 0.3, 1), filter 1.5s ease; }
+        .chapter-media { width: 100%; background: var(--fildes); border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px rgba(38, 28, 25, 0.03); }
+        
+        @media (min-width: 1024px) {
+            .chapter-media { flex: 1.2; border-radius: 30px; }
+        }
+        
+        .chapter-media img { width: 100%; height: 300px; display: block; object-fit: cover; transform: scale(1.1); filter: blur(2px); transition: transform 2s cubic-bezier(0.25, 1, 0.3, 1), filter 1.5s ease; }
+        
+        @media (min-width: 1024px) {
+            .chapter-media img { height: 550px; }
+        }
+        
         .chapter.revealed .chapter-media img { transform: scale(1); filter: blur(0); }
         .chapter:hover .chapter-media img { transform: scale(1.03); }
 
-        .chapter-text { flex: 1; padding: 20px 0; }
-        .chapter-text span { font-family: 'Cinzel'; color: var(--auriu); font-size: 0.8rem; letter-spacing: 4px; display: block; margin-bottom: 20px; font-weight: 700; }
-        .chapter-text h2 { font-family: 'Playfair Display'; font-size: clamp(2.2rem, 4vw, 3.8rem); font-style: italic; color: var(--ciocolatiu); line-height: 1.15; margin-bottom: 25px; font-weight: 400; }
-        .chapter-text p { color: var(--text-muted); font-size: 1.15rem; margin-bottom: 40px; font-weight: 300; text-align: left; }
+        .chapter-text { width: 100%; text-align: center; }
         
-        .btn-mag { display: inline-block; padding: 20px 45px; background: var(--ciocolatiu); color: var(--fildes); font-family: 'Cinzel'; text-decoration: none; border-radius: 50px; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700; transition: 0.4s cubic-bezier(0.25, 1, 0.3, 1); text-align: center; box-shadow: 0 10px 20px rgba(38, 28, 25, 0.15); }
-        .btn-mag:hover { transform: translateY(-4px); background: var(--auriu); color: var(--fildes); box-shadow: 0 15px 30px rgba(197, 160, 89, 0.3); }
-
-        /* TESTIMONIALE FLUIDE */
-        .reviews-section { padding: 120px 10%; background: var(--fildes); border-bottom: 1px solid rgba(244, 222, 214, 0.5); text-align: center; }
-        .reviews-header { max-width: 700px; margin: 0 auto 60px; }
-        .reviews-header span { font-family: 'Cinzel'; color: var(--auriu); font-size: 0.8rem; letter-spacing: 5px; display: block; margin-bottom: 15px; font-weight: 700; }
-        .reviews-header h2 { font-family: 'Playfair Display'; font-size: clamp(2.2rem, 4vw, 3.5rem); font-style: italic; color: var(--ciocolatiu); font-weight: 400; }
+        @media (min-width: 1024px) {
+            .chapter-text { flex: 1; text-align: left; padding: 20px 0; }
+        }
         
-        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto; }
-        .review-card { background: var(--roz-pudrat); padding: 40px; border-radius: 20px; border: 1px solid var(--roz-accent); text-align: left; transition: all 1s cubic-bezier(0.25, 1, 0.3, 1); opacity: 0; transform: translateY(30px); }
-        .review-card.revealed { opacity: 1; transform: translateY(0); }
-        .review-card p { font-size: 1.05rem; font-style: italic; color: var(--ciocolatiu); margin-bottom: 20px; text-align: left; }
-        .review-author { font-family: 'Cinzel'; font-size: 0.85rem; letter-spacing: 2px; color: var(--auriu); font-weight: 700; }
+        .chapter-text span { font-family: 'Cinzel'; color: var(--auriu); font-size: 0.75rem; letter-spacing: 3px; display: block; margin-bottom: 15px; font-weight: 700; text-transform: uppercase; }
+        .chapter-text h2 { font-family: 'Playfair Display'; font-size: clamp(2rem, 4vw, 3rem); font-style: italic; color: var(--ciocolatiu); line-height: 1.2; margin-bottom: 20px; font-weight: 400; }
+        .chapter-text p { color: var(--text-muted); font-size: clamp(1rem, 1.5vw, 1.1rem); margin-bottom: 35px; font-weight: 300; max-width: 600px; margin-left: auto; margin-right: auto; }
+        
+        @media (min-width: 1024px) {
+            .chapter-text p { margin-left: 0; margin-right: 0; text-align: left; max-width: 100%; }
+        }
+        
+        .btn-mag { display: inline-block; padding: 18px 40px; background: var(--ciocolatiu); color: var(--fildes); font-family: 'Cinzel'; text-decoration: none; border-radius: 50px; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700; transition: 0.4s cubic-bezier(0.25, 1, 0.3, 1); text-align: center; box-shadow: 0 10px 20px rgba(38, 28, 25, 0.1); }
+        .btn-mag:hover { transform: translateY(-3px); background: var(--auriu); color: var(--fildes); box-shadow: 0 12px 25px rgba(197, 160, 89, 0.2); }
 
-        /* SIGNATURE SECTION */
-        .signature-section { padding: 130px 10%; background: var(--roz-pudrat); text-align: center; border-top: 1px solid var(--roz-accent); }
-        .profile-img { width: 200px; height: 200px; border-radius: 50%; margin: 0 auto 40px; border: 2px solid var(--auriu); padding: 6px; overflow: hidden; background: var(--fildes); }
+        /* SECTIUNE RECENZII CURĂȚATĂ */
+        .reviews-section { padding: 80px 5%; background: var(--fildes); border-bottom: 1px solid rgba(244, 222, 214, 0.4); text-align: center; opacity: 0; transform: translateY(30px); transition: opacity 1.2s cubic-bezier(0.25, 1, 0.3, 1), transform 1.2s cubic-bezier(0.25, 1, 0.3, 1); }
+        
+        @media (min-width: 1024px) {
+            .reviews-section { padding: 120px var(--desktop-margin); }
+        }
+        
+        .reviews-section.revealed { opacity: 1; transform: translateY(0); }
+        .reviews-header { max-width: 600px; margin: 0 auto 50px; }
+        .reviews-header span { font-family: 'Cinzel'; color: var(--auriu); font-size: 0.75rem; letter-spacing: 4px; display: block; margin-bottom: 12px; font-weight: 700; text-transform: uppercase; }
+        .reviews-header h2 { font-family: 'Playfair Display'; font-size: clamp(2rem, 4vw, 3rem); font-style: italic; color: var(--ciocolatiu); font-weight: 400; }
+        
+        .elfsight-container { max-width: 1100px; margin: 0 auto; }
+
+        /* SIGNATURE SECTION RECEPTIVĂ */
+        .signature-section { padding: 100px 5%; background: var(--roz-pudrat); text-align: center; border-top: 1px solid var(--roz-accent); }
+        
+        @media (min-width: 1024px) {
+            .signature-section { padding: 130px var(--desktop-margin); }
+        }
+        
+        .profile-img { width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 35px; border: 2px solid var(--auriu); padding: 5px; overflow: hidden; background: var(--fildes); }
+        
+        @media (min-width: 1024px) {
+            .profile-img { width: 200px; height: 200px; margin-bottom: 40px; }
+        }
+        
         .profile-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; object-position: center 20%; }
-        .quote { font-family: 'Playfair Display'; font-size: 2.2rem; font-style: italic; color: var(--ciocolatiu); max-width: 850px; margin: 0 auto 35px; line-height: 1.45; font-weight: 300; }
-        .name-label { font-family: 'Cinzel'; letter-spacing: 8px; font-size: 1rem; font-weight: 700; color: var(--auriu); text-transform: uppercase; }
+        .quote { font-family: 'Playfair Display'; font-size: clamp(1.6rem, 3vw, 2.2rem); font-style: italic; color: var(--ciocolatiu); max-width: 800px; margin: 0 auto 30px; line-height: 1.4; font-weight: 300; }
+        .name-label { font-family: 'Cinzel'; letter-spacing: 6px; font-size: 0.9rem; font-weight: 700; color: var(--auriu); text-transform: uppercase; }
 
-        /* FOOTER */
-        footer { padding: 80px 10% 50px; background: var(--fildes); border-top: 1px solid var(--roz-accent); }
-        .footer-grid { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 40px; }
-        .legal-links a { color: var(--text-muted); text-decoration: none; font-family: 'Cinzel'; font-size: 0.75rem; letter-spacing: 2px; margin-right: 30px; transition: 0.3s; }
+        /* FOOTER RECEPTIV */
+        footer { padding: 60px 5% 40px; background: var(--fildes); border-top: 1px solid var(--roz-accent); text-align: center; }
+        
+        @media (min-width: 1024px) {
+            .footer { padding: 80px var(--desktop-margin) 50px; }
+        }
+        
+        .footer-grid { display: flex; flex-direction: column; gap: 30px; align-items: center; }
+        
+        @media (min-width: 768px) {
+            .footer-grid { flex-direction: row; justify-content: space-between; align-items: flex-end; }
+        }
+        
+        .legal-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; }
+        
+        @media (min-width: 768px) {
+            .legal-links { margin-bottom: 0; }
+        }
+        
+        .legal-links a { color: var(--text-muted); text-decoration: none; font-family: 'Cinzel'; font-size: 0.7rem; letter-spacing: 2px; transition: 0.3s; text-transform: uppercase; }
         .legal-links a:hover { color: var(--auriu); }
         
-        .footer-logos { display: flex; gap: 20px; align-items: center; }
-        .footer-logos img { height: 45px; width: auto; display: block; }
+        .footer-logos { display: flex; gap: 15px; align-items: center; justify-content: center; margin-bottom: 25px; }
         
-        .cui-info { font-family: 'Cinzel'; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 3px; margin-top: 35px; border-top: 1px solid var(--roz-accent); padding-top: 35px; line-height: 1.6; }
-        .tribute { font-family: 'Cinzel'; color: var(--roz-accent); font-size: 0.65rem; letter-spacing: 10px; margin-top: 30px; display: block; text-align: center; font-weight: 700; }
-
-        /* RESPONSIVE MEDIA QUERIES */
-        @media (max-width: 1100px) {
-            .site-header { padding: 25px 5%; }
-            .hero { padding: 0 5%; }
-            .hero-content { padding-left: 25px; }
-            
-            .splash-separator { height: 200px; }
-
-            .chapter, .chapter:nth-child(even) { flex-direction: column-reverse; text-align: center; gap: 30px; padding: 60px 5%; }
-            .chapter-media { width: 100%; height: auto; max-height: 400px; }
-            .chapter-media img { height: 350px; width: 100%; transform: scale(1.08); }
-            .chapter-text { padding: 10px 0; }
-            .chapter-text h2 { font-size: 2.4rem; }
-            .chapter-text p { text-align: center; font-size: 1.1rem; margin-bottom: 25px; }
-            
-            .reviews-section { padding: 80px 5% 120px; }
-            .reviews-grid { grid-template-columns: 1fr; gap: 50px; padding: 0 10px; }
-            .review-card { padding: 30px; border-radius: 15px; }
-            .review-card p { font-size: 1rem; line-height: 1.6; text-align: left; }
-            .review-author { font-size: 0.8rem; }
-            
-            .signature-section { padding: 80px 5%; }
-            .quote { font-size: 1.8rem; }
-            
-            .footer-grid { flex-direction: column; align-items: center; text-align: center; gap: 35px; }
-            .legal-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 10px; }
-            .legal-links a { margin-right: 0; }
-            .footer-logos { justify-content: center; }
-            .footer-logos img { height: 35px; }
+        @media (min-width: 768px) {
+            .footer-logos { margin-bottom: 0; }
         }
+        
+        .footer-logos img { height: 35px; width: auto; display: block; }
+        
+        .cui-info { font-family: 'Cinzel'; color: var(--text-muted); font-size: 0.65rem; letter-spacing: 2px; margin-top: 30px; border-top: 1px solid var(--roz-accent); padding-top: 30px; line-height: 1.6; text-transform: uppercase; width: 100%; }
+        .tribute { font-family: 'Cinzel'; color: var(--roz-accent); font-size: 0.6rem; letter-spacing: 8px; margin-top: 25px; display: block; text-align: center; font-weight: 700; text-transform: uppercase; }
 
-        .wa-float { position: fixed; bottom: 40px; left: 40px; color: var(--auriu); font-size: 38px; z-index: 9999; opacity: 0.7; transition: 0.3s; }
-        .wa-float:hover { opacity: 1; transform: scale(1.1) rotate(8deg); }
+        /* WHATSAPP FLOAT */
+        .wa-float { position: fixed; bottom: 25px; left: 25px; color: var(--auriu); font-size: 32px; z-index: 9999; opacity: 0.8; transition: 0.3s; }
+        
+        @media (min-width: 1024px) {
+            .wa-float { bottom: 40px; left: 40px; font-size: 38px; }
+        }
+        
+        .wa-float:hover { opacity: 1; transform: scale(1.1) rotate(5deg); }
     </style>
 </head>
 <body>
 
     <a href="https://wa.me/40749229686" class="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <div class="elfsight-app-3b02c58c-e516-4340-9a57-45342cacc2d4" data-elfsight-app-lazy></div>
 
     <header class="site-header" id="header">
         <a href="index.html" class="brand-logo">COQUETE<span>.</span></a>
@@ -203,7 +258,7 @@
         <div class="hero-content">
             <span class="tagline">BIANCA IACOBONI ARTISTRY</span>
             <h1>Versiunea ta cea mai bună.</h1>
-            <p style="font-family:'Cinzel'; opacity: 0.9; letter-spacing: 8px; font-size: 0.9rem; color: var(--auriu);">WEEKEND CONCEPT • EXCLUSIVE STUDIO</p>
+            <p style="font-family:'Cinzel'; opacity: 0.9; letter-spacing: 6px; font-size: 0.85rem; color: var(--auriu);">WEEKEND CONCEPT • EXCLUSIVE STUDIO</p>
         </div>
     </section>
 
@@ -266,19 +321,8 @@
                 <span>CHAPTER 05 / ÎNCREDERE</span>
                 <h2>Gânduri de la clientele noastre.</h2>
             </div>
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <p>"Cel mai curat și luminos machiaj pe care l-am avut vreodată! Rezistența a fost impecabilă, de dimineața până târziu în noapte."</p>
-                    <div class="review-author">— Simona D.</div>
-                </div>
-                <div class="review-card">
-                    <p>"Cursul de automachiaj mi-a schimbat complet modul în care mă privesc în oglindă. Bianca explică totul cu o răbdare și căldură incredibilă."</p>
-                    <div class="review-author">— Elena M.</div>
-                </div>
-                <div class="review-card">
-                    <p>"O adevărată artistă! Recomand cu tot sufletul sesiunile private pentru mirese, oferă o siguranță uriașă în ziua nunții."</p>
-                    <div class="review-author">— Andreea R.</div>
-                </div>
+            <div class="elfsight-container">
+                <div class="elfsight-app-a11eb3ab-1fa7-471a-95fb-6dc89c0fb3ff" data-elfsight-app-lazy></div>
             </div>
         </section>
 
@@ -300,15 +344,15 @@
                     <a href="#">COOKIES</a>
                     <a href="#">TERMENI</a>
                 </div>
-                <div class="cui-info">
-                    COQUETE BEAUTY STUDIO | STUDIO: PĂCLIȘA, HUNEDOARA<br>
-                    RELAȚII CLIENȚI & PROGRAMĂRI EXCLUSIVE • DEVA - PĂCLIȘA
-                </div>
             </div>
             <div class="footer-logos">
                 <a href="https://anpc.ro/ce-este-sal/" target="_blank"><img src="./anpc-sal.png" alt="SAL"></a>
                 <a href="https://anpc.ro/" target="_blank"><img src="./anpc-sol.png" alt="SOL"></a>
             </div>
+        </div>
+        <div class="cui-info">
+            COQUETE BEAUTY STUDIO | STUDIO: PĂCLIȘA, HUNEDOARA<br>
+            RELAȚII CLIENȚI & PROGRAMĂRI EXCLUSIVE • DEVA - PĂCLIȘA
         </div>
         <span class="tribute">ARTISTRY & HARMONY CONCEPT</span>
     </footer>
@@ -329,12 +373,12 @@
         };
 
         window.onscroll = () => {
-            if (window.scrollY > 80) header.classList.add('scrolled');
+            if (window.scrollY > 50) header.classList.add('scrolled');
             else header.classList.remove('scrolled');
         };
 
-        // INTERSECTION OBSERVER
-        const revealElements = document.querySelectorAll('.chapter, .review-card');
+        // INTERSECTION OBSERVER PENTRU EFECTE REVEAL ACTIV PE DESKTOP
+        const revealElements = document.querySelectorAll('.chapter, .reviews-section');
         
         const revealOnScroll = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -344,7 +388,7 @@
                 }
             });
         }, {
-            threshold: 0.12
+            threshold: 0.1
         });
 
         revealElements.forEach(el => revealOnScroll.observe(el));
