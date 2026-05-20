@@ -45,7 +45,7 @@
         .btn-back { font-family: 'Cinzel'; text-decoration: none; color: var(--ciocolatiu); font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
         .btn-back:hover { color: var(--auriu); }
 
-        /* HERO STIL ERMES ITALIA */
+        /* HERO STIL ERMES ITALIA CU BLUR AMBIENTAL */
         .forum-hero { 
             position: relative; 
             padding: 160px 5% 80px; 
@@ -70,7 +70,7 @@
         /* CONTAINER FORUM SPACE */
         .forum-wrapper { max-width: 900px; margin: 0 auto; padding: 60px 5% 120px; }
 
-        /* FORMULAR DE SCRIERE */
+        /* FORMULAR DE SCRIERE DIRECTĂ */
         .write-box { background: var(--fildes); border: 1px solid var(--roz-accent); padding: 40px 30px; border-radius: 16px; box-shadow: 0 20px 40px rgba(38,28,25,0.02); margin-bottom: 60px; }
         .write-box h2 { font-family: 'Playfair Display'; font-style: italic; font-size: 1.7rem; color: var(--ciocolatiu); font-weight: 400; margin-bottom: 25px; border-left: 2px solid var(--auriu); padding-left: 15px; }
         
@@ -105,12 +105,12 @@
         .comment-date { font-family: 'Inter'; font-size: 0.75rem; color: var(--text-muted); font-weight: 300; }
         .comment-text { color: var(--text-muted); font-size: 1rem; font-weight: 300; text-align: justify; line-height: 1.6; }
 
-        /* BUTONUL DISCRET DE ȘTERGERE */
+        /* COȘ DISCRET DE ȘTERGERE SECURE */
         .btn-delete { 
             position: absolute; 
             top: 25px; 
             right: 25px; 
-            color: rgba(38, 28, 25, 0.2); 
+            color: rgba(38, 28, 25, 0.15); 
             background: none; 
             border: none; 
             cursor: pointer; 
@@ -121,7 +121,13 @@
 
         /* FOOTER */
         footer { padding: 60px 5% 40px; background: var(--fildes); border-top: 1px solid var(--roz-accent); text-align: center; }
-        .cui-info { font-family: 'Cinzel'; color: var(--text-muted); font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+        .footer-section h4 { color: var(--auriu); font-family: 'Cinzel'; margin-bottom: 20px; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; }
+        .footer-section p, .footer-section a { font-size: 0.75rem; color: #888 !important; text-decoration: none; margin-bottom: 10px; display: block; line-height: 1.6; }
+        
+        .anpc-links { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
+        .anpc-links img { height: 35px; background: white; border-radius: 4px; padding: 2px; }
+        .qr-box { background: white; padding: 8px; display: inline-block; border-radius: 6px; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -182,15 +188,44 @@
         </section>
     </main>
 
-    <footer>
-        <div class="cui-info">
-            COQUETE BEAUTY STUDIO | COMUNITATE & RÂNDUIALĂ DIRECTĂ<br>
-            ARTISTRY & HARMONY CONCEPT © 2026
+    <footer class="footer-legal">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>INFORMAȚII STUDIO</h4>
+                <p>COQUETE BEAUTY STUDIO</p>
+                <p>STUDIO: PĂCLIȘA, HUNEDOARA</p>
+                <p>RELAȚII CLIENȚI & PROGRAMĂRI EXCLUSIVE</p>
+            </div>
+            <div class="footer-section">
+                <h4>POLITICI</h4>
+                <a href="termeni-si-conditii.html">Termeni și Condiții</a>
+                <a href="confidentialitate.html">Politica GDPR (Confidențialitate)</a>
+            </div>
+            <div class="footer-section">
+                <h4>PROTECȚIA CONSUMATORULUI</h4>
+                <div class="anpc-links">
+                    <a href="https://anpc.ro/ce-este-sal/" target="_blank">
+                        <img src="images/anpc-sal.png" alt="SAL">
+                    </a>
+                    <a href="https://ec.europa.eu/consumers/odr/" target="_blank">
+                        <img src="images/anpc-sol.png" alt="SOL">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section" style="text-align: center;">
+                <h4>PORTOFOLIU DIGITAL</h4>
+                <div class="qr-box">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://hategalternativ.ro/portofoliu.html" alt="QR Portofoliu">
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:40px; border-top: 1px solid #261c19; padding-top: 20px; font-family:'Cinzel'; font-size:0.7rem; color:var(--text-muted); letter-spacing: 2px;">
+            COQUETE BEAUTY STUDIO &copy; 2026 | ARTISTRY & HARMONY CONCEPT
         </div>
     </footer>
 
     <script {nonce}>
-        // Mecanismul de adăugare
+        // Funcția de adăugare postări în timp real
         document.getElementById('forumForm').onsubmit = function(e) {
             e.preventDefault();
             
@@ -223,14 +258,22 @@
             document.getElementById('forumForm').reset();
         };
 
-        // Mecanismul de ștergere instantanee
+        // Funcția de ștergere cu parolă exclusivă pentru tine
         function removePost(button) {
-            const card = button.parentElement; // Găsește cardul părinte al butonului apăsat
-            card.style.opacity = '0';
-            card.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                card.remove(); // Îl șterge definitiv din structura paginii
-            }, 400);
+            const parolaCorecta = "metanoia"; 
+            
+            const raspunsUtilizator = prompt("Introdu parola de administrator pentru a șterge:");
+            
+            if (raspunsUtilizator === parolaCorecta) {
+                const card = button.parentElement;
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    card.remove();
+                }, 400);
+            } else if (raspunsUtilizator !== null) {
+                alert("Parolă incorectă! Nu ai dreptul să rânduiești acest forum. 😅");
+            }
         }
     </script>
 </body>
