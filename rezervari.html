@@ -3,155 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rezervări Premium | Coquete</title>
+    <title>Rezervări Coquete</title>
     <style>
-        /* Stilul de Lux inspirat de Ermes Italia */
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Playfair Display', 'Segoe UI', serif;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), 
-                        url('https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1920') no-repeat center center fixed;
-            background-size: cover;
-            color: #f4efe6; /* Crem elegant */
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
         }
-
-        /* Cardul principal cu efect de blur pe fundal (Glassmorphism de lux) */
-        .reservation-container {
-            background: rgba(15, 15, 15, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(212, 175, 55, 0.2); /* Margine fină aurie */
-            padding: 40px;
-            border-radius: 4px;
+        .form-container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 500px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            box-sizing: border-box;
+            max-width: 450px;
         }
-
         h2 {
             text-align: center;
-            font-weight: 300;
-            letter-spacing: 3px;
-            color: #d4af37; /* Auriu regal */
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            font-size: 24px;
-        }
-
-        .form-group {
+            color: #111;
             margin-bottom: 20px;
         }
-
+        .form-group {
+            margin-bottom: 15px;
+        }
         label {
             display: block;
-            margin-bottom: 8px;
-            font-size: 13px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: #f4efe6;
-            opacity: 0.9;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
         }
-
         input, select, textarea {
             width: 100%;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 2px;
-            color: #fff;
-            font-size: 15px;
-            transition: all 0.3s ease;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
             box-sizing: border-box;
+            font-size: 14px;
         }
-
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #d4af37;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+            border-color: #666;
         }
-
-        option {
-            background: #111;
-            color: #f4efe6;
-        }
-
-        textarea {
-            resize: vertical;
-            height: 80px;
-        }
-
-        /* Butonul de trimitere Premium */
         button {
             width: 100%;
-            padding: 15px;
-            background: #d4af37;
+            padding: 12px;
+            background-color: #111;
+            color: #fff;
             border: none;
-            color: #000;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            border-radius: 4px;
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-            border-radius: 2px;
+            font-weight: bold;
         }
-
         button:hover {
-            background: #b8972f;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-            letter-spacing: 3px;
+            background-color: #333;
         }
-
-        .status-message {
+        .status {
             margin-top: 15px;
             text-align: center;
-            font-size: 14px;
+            font-weight: bold;
             display: none;
-            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-<div class="reservation-container">
-    <h2>Solicitare Rezervare</h2>
+<div class="form-container">
+    <h2>Programare Nouă</h2>
     
-    <form id="reservationForm">
+    <form id="bookingForm">
         <div class="form-group">
-            <label for="customer_name">Nume Complet</label>
-            <input type="text" id="customer_name" required placeholder="Ex: Otilia Salasan">
+            <label for="customer_name">Nume complet</label>
+            <input type="text" id="customer_name" required placeholder="Nume și Prenume">
         </div>
 
         <div class="form-group">
-            <label for="customer_phone">Număr Telefon</label>
-            <input type="tel" id="customer_phone" required placeholder="Ex: 0749xxxxxx">
+            <label for="customer_phone">Număr telefon</label>
+            <input type="tel" id="customer_phone" required placeholder="07xx xxx xxx">
         </div>
 
         <div class="form-group">
-            <label for="service">Serviciu Dorit</label>
+            <label for="service">Serviciu</label>
             <select id="service" required>
                 <option value="" disabled selected>Alege serviciul...</option>
                 <option value="Sesiune Privată / Eveniment de Elită">Sesiune Privată / Eveniment de Elită</option>
-                <option value="Consultanță de Brand Premium">Consultanță de Brand Premium</option>
-                <option value="Experiență Gastronică Dedicată">Experiență Gastronică Dedicată</option>
+                <option value="Coquete Academy — Curs Automachiaj 1:1">Coquete Academy — Curs Automachiaj 1:1</option>
+                <option value="Bridal Glow (Pachet Complet Mireasă Premium)">Bridal Glow (Pachet Complet Mireasă Premium)</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="date">Data Solicitată</label>
+            <label for="date">Data programării</label>
             <input type="date" id="date" required>
         </div>
 
         <div class="form-group">
-            <label for="time">Ora Dorită</label>
+            <label for="time">Ora</label>
             <select id="time" required>
                 <option value="" disabled selected>Alege intervalul...</option>
                 <option value="10:00 - Sesiune de Dimineață">10:00 - Sesiune de Dimineață</option>
@@ -161,26 +111,26 @@
         </div>
 
         <div class="form-group">
-            <label for="notes">Mențiuni Speciale / Note</label>
-            <textarea id="notes" placeholder="Dacă aveți preferințe sau detalii de transmis..."></textarea>
+            <label for="notes">Mențiuni speciale</label>
+            <textarea id="notes" placeholder="Detalii suplimentare..."></textarea>
         </div>
 
-        <button type="submit">Trimite Solicitarea</button>
-        <div id="statusMessage" class="status-message"></div>
+        <button type="submit">Trimite Programarea</button>
+        <div id="status" class="status"></div>
     </form>
 </div>
 
 <script>
-    document.getElementById('reservationForm').addEventListener('submit', async function(e) {
+    document.getElementById('bookingForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const button = e.target.querySelector('button');
-        const status = document.getElementById('statusMessage');
+        const btn = e.target.querySelector('button');
+        const statusBox = document.getElementById('status');
         
-        button.disabled = true;
-        button.innerText = "Se trimite...";
+        btn.disabled = true;
+        btn.innerText = "Se trimite...";
 
-        const formData = {
+        const data = {
             customer_name: document.getElementById('customer_name').value,
             customer_phone: document.getElementById('customer_phone').value,
             service: document.getElementById('service').value,
@@ -190,33 +140,31 @@
             timestamp: new Date().toLocaleString('ro-RO')
         };
 
-        // Webhook-ul tău oficial din Make introdus corect:
-        const webhookUrl = 'https://hook.eu1.make.com/kl5zil3ff85l8o4i0t9inya4l2xphidd';
+        // Webhook-ul tău funcțional
+        const url = 'https://hook.eu1.make.com/kl5zil3ff85l8o4i0t9inya4l2xphidd';
 
         try {
-            const response = await fetch(webhookUrl, {
+            const res = await fetch(url, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
             });
 
-            if (response.ok) {
-                status.style.color = "#d4af37";
-                status.innerText = "Solicitarea a fost transmisă cu tihnă. Veți primi confirmarea pe WhatsApp! ✨";
-                status.style.display = "block";
+            if (res.ok) {
+                statusBox.style.color = "green";
+                statusBox.innerText = "Programarea a fost trimisă cu succes!";
+                statusBox.style.display = "block";
                 e.target.reset();
             } else {
                 throw new Error();
             }
-        } catch (error) {
-            status.style.color = "#ff4d4d";
-            status.innerText = "A apărut o mică eroare. Vă rugăm să reîncercați.";
-            status.style.display = "block";
+        } catch (err) {
+            statusBox.style.color = "red";
+            statusBox.innerText = "Eroare la trimitere. Încearcă din nou.";
+            statusBox.style.display = "block";
         } finally {
-            button.disabled = false;
-            button.innerText = "Trimite Solicitarea";
+            btn.disabled = false;
+            btn.innerText = "Trimite Programarea";
         }
     });
 </script>
