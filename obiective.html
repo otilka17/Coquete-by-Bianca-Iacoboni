@@ -11,7 +11,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Obiective & Despre Artist | Coquete</title>
+    <title>Obiective & Roadmap 2026 | Coquete</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400;1,700&family=Cinzel:wght@400;700;900&family=Inter:wght@200;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -35,7 +35,7 @@
         ::-webkit-scrollbar-track { background: var(--roz-pudrat); }
         ::-webkit-scrollbar-thumb { background: var(--auriu); border-radius: 2px; }
 
-        /* SITE HEADER */
+        /* HEADER PREMIUM */
         .site-header { position: fixed; top: 0; width: 100%; z-index: 9999; padding: 25px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(251, 244, 241, 0.95); backdrop-filter: blur(5px); border-bottom: 1px solid var(--roz-accent); }
         @media (min-width: 1024px) { .site-header { padding: 20px var(--desktop-margin); } }
         
@@ -45,42 +45,69 @@
         .btn-back { font-family: 'Cinzel'; text-decoration: none; color: var(--ciocolatiu); font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
         .btn-back:hover { color: var(--auriu); }
 
-        /* HERO SECTION SHORT */
-        .page-hero { padding: 140px 5% 60px; text-align: center; background: var(--fildes); border-bottom: 1px solid rgba(244, 222, 214, 0.4); }
-        @media (min-width: 1024px) { .page-hero { padding: 180px var(--desktop-margin) 80px; } }
-        .page-hero span { font-family: 'Cinzel'; color: var(--auriu); font-size: 0.8rem; letter-spacing: 5px; display: block; margin-bottom: 15px; font-weight: 700; }
-        .page-hero h1 { font-family: 'Playfair Display'; font-size: clamp(2.2rem, 5vw, 3.8rem); font-style: italic; color: var(--ciocolatiu); font-weight: 400; line-height: 1.2; }
+        /* HERO CU IMAGINE DE FUNDAL BLURATĂ */
+        .objectives-hero { 
+            position: relative; 
+            padding: 160px 5% 80px; 
+            text-align: center; 
+            background: var(--ciocolatiu);
+            overflow: hidden;
+        }
+        .objectives-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1600');
+            background-size: cover;
+            background-position: center center;
+            filter: blur(8px) opacity(0.2);
+            z-index: 0;
+        }
+        .hero-inside { position: relative; z-index: 1; }
+        .objectives-hero span { font-family: 'Cinzel'; color: var(--auriu); font-size: 0.8rem; letter-spacing: 5px; display: block; margin-bottom: 15px; font-weight: 700; text-transform: uppercase; }
+        .objectives-hero h1 { font-family: 'Playfair Display'; font-size: clamp(2.2rem, 5vw, 3.8rem); font-style: italic; color: var(--fildes); font-weight: 400; line-height: 1.2; }
 
-        /* CORP CONȚINUT EDITORIAL */
-        .content-wrapper { background: var(--fildes); }
+        /* WRAPPER CONȚINUT */
+        .content-wrapper { max-width: 1000px; margin: 0 auto; padding: 60px 5% 120px; }
+
+        /* SECȚIUNE PILONI STRATEGICI */
+        .section-title { font-family: 'Cinzel'; font-size: 0.9rem; color: var(--auriu); letter-spacing: 4px; margin-bottom: 40px; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid var(--roz-accent); padding-bottom: 15px; text-align: center; }
         
-        .section-block { padding: 80px 5%; border-bottom: 1px solid rgba(244, 222, 214, 0.4); display: flex; flex-direction: column; gap: 40px; }
-        @media (min-width: 1024px) { 
-            .section-block { padding: 100px var(--desktop-margin); flex-direction: row; gap: 80px; align-items: center; } 
-            .section-block.reverse { flex-direction: row-reverse; background: var(--roz-pudrat); }
+        .goals-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-bottom: 80px; }
+        @media (min-width: 768px) { .goals-grid { grid-template-columns: 1fr 1fr; } }
+
+        .goal-card { background: var(--fildes); border: 1px solid var(--roz-accent); padding: 35px 30px; border-radius: 16px; box-shadow: 0 15px 35px rgba(38,28,25,0.01); transition: 0.3s ease; }
+        .goal-card:hover { border-color: var(--auriu); transform: translateY(-3px); }
+        .goal-card i { color: var(--auriu); font-size: 1.8rem; margin-bottom: 20px; display: block; }
+        .goal-card h3 { font-family: 'Playfair Display'; font-style: italic; font-size: 1.4rem; color: var(--ciocolatiu); font-weight: 400; margin-bottom: 12px; }
+        .goal-card p { color: var(--text-muted); font-size: 0.95rem; font-weight: 300; line-height: 1.6; }
+
+        /* ROADMAP - CRONOLOGIE DE LUX */
+        .roadmap-container { position: relative; padding: 20px 0; }
+        .roadmap-container::before { content: ''; position: absolute; top: 0; bottom: 0; left: 20px; width: 1px; background: var(--roz-accent); }
+        @media (min-width: 768px) { .roadmap-container::before { left: 50%; } }
+
+        .roadmap-item { position: relative; margin-bottom: 50px; padding-left: 50px; }
+        @media (min-width: 768px) { 
+            .roadmap-item { padding-left: 0; width: 50%; margin-bottom: 60px; }
+            .roadmap-item:nth-child(odd) { padding-right: 40px; text-align: right; left: 0; }
+            .roadmap-item:nth-child(even) { padding-left: 40px; text-align: left; left: 50%; }
         }
 
-        .block-media { width: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px rgba(38, 28, 25, 0.03); }
-        @media (min-width: 1024px) { .block-media { flex: 1.1; border-radius: 30px; } }
-        .block-media img { width: 100%; height: 320px; display: block; object-fit: cover; }
-        @media (min-width: 1024px) { .block-media img { height: 480px; } }
+        .roadmap-dot { position: absolute; left: 10px; top: 5px; width: 20px; height: 20px; border-radius: 50%; background: var(--fildes); border: 2px solid var(--auriu); z-index: 2; }
+        @media (min-width: 768px) { 
+            .roadmap-item:nth-child(odd) .roadmap-dot { left: auto; right: -10px; }
+            .roadmap-item:nth-child(even) .roadmap-dot { left: -10px; }
+        }
 
-        .block-text { width: 100%; }
-        @media (min-width: 1024px) { .block-text { flex: 1; } }
-        
-        .block-text span { font-family: 'Cinzel'; color: var(--auriu); font-size: 0.75rem; letter-spacing: 3px; display: block; margin-bottom: 15px; font-weight: 700; }
-        .block-text h2 { font-family: 'Playfair Display'; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-style: italic; color: var(--ciocolatiu); line-height: 1.2; margin-bottom: 25px; font-weight: 400; }
-        .block-text p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 25px; font-weight: 300; }
-        
-        /* LISTĂ STRATEGICĂ OBIECTIVE */
-        .objectives-list { list-style: none; margin-top: 20px; }
-        .objectives-list li { position: relative; padding-left: 30px; margin-bottom: 20px; color: var(--ciocolatiu); font-weight: 400; font-size: 1.05rem; }
-        .objectives-list li i { position: absolute; left: 0; top: 4px; color: var(--auriu); font-size: 1.1rem; }
-        .objectives-list li p { font-size: 0.95rem; color: var(--text-muted); margin-top: 4px; font-weight: 300; }
+        .roadmap-content { background: var(--fildes); border: 1px solid var(--roz-accent); padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(38,28,25,0.01); }
+        .roadmap-time { font-family: 'Cinzel'; font-size: 0.75rem; color: var(--auriu); letter-spacing: 2px; font-weight: 700; display: block; margin-bottom: 8px; }
+        .roadmap-content h4 { font-family: 'Playfair Display'; font-style: italic; font-size: 1.25rem; color: var(--ciocolatiu); font-weight: 400; margin-bottom: 10px; }
+        .roadmap-content p { color: var(--text-muted); font-size: 0.9rem; font-weight: 300; line-height: 1.5; }
 
         /* FOOTER */
         footer { padding: 60px 5% 40px; background: var(--fildes); border-top: 1px solid var(--roz-accent); text-align: center; }
-        .cui-info { font-family: 'Cinzel'; color: var(--text-muted); font-size: 0.65rem; letter-spacing: 2px; margin-top: 20px; text-transform: uppercase; }
+        .cui-info { font-family: 'Cinzel'; color: var(--text-muted); font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -90,57 +117,93 @@
         <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> ÎNAPOI</a>
     </header>
 
-    <main class="content-wrapper">
-        
-        <section class="page-hero">
-            <span>CHAPTER 06 / VIZIUNE</span>
-            <h1>Direcții Directe & Execuție</h1>
+    <main>
+        <section class="objectives-hero">
+            <div class="hero-inside">
+                <span>MASTERPLAN STRATEGIC</span>
+                <h1>Obiective & Direcții de Dezvoltare</h1>
+            </div>
         </section>
 
-        <section class="section-block" id="obiective-strategice">
-            <div class="block-media">
-                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1200" alt="Masterplan Coquete">
-            </div>
-            <div class="block-text">
-                <span>MASTERPLAN 2026</span>
-                <h2>Pilonii de Dezvoltare</h2>
-                <p>Ne rânduim pașii cu o atenție matematică la detalii și cifre, pentru a menține un echilibru perfect între actele la zi, stabilitatea operațională și viziunea noastră artistică de tip Quiet Luxury.</p>
+        <section class="content-wrapper">
+            
+            <h2 class="section-title">Obiective Absolute</h2>
+            <div class="goals-grid">
                 
-                <ul class="objectives-list">
-                    <li>
-                        <i class="fa-solid fa-chevron-right"></i> Rânduială Administrativă
-                        <p>Fiecare parteneriat, contract și flux financiar este guvernat de precizie, documentație completă și control intern riguros.</p>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-chevron-right"></i> Scalare Inteligentă
-                        <p>Pregătirea structurilor strategice pentru a face puntea directă cu comunitatea de elită și spațiile corporate de tip top.</p>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-chevron-right"></i> Standard de Excelență
-                        <p>Menținerea unui control calitativ total asupra fiecărei sesiuni, fără a face niciun compromis de timp sau de materiale utilizate.</p>
-                    </li>
-                </ul>
-            </div>
-        </section>
+                <div class="goal-card">
+                    <i class="fa-solid fa-compress-arrows-alt"></i>
+                    <h3>Micronizare Structurală</h3>
+                    <p>Reducerea completă a zgomotului de fond operațional. Comprimarea meniului la piloni stabili de înaltă performanță financiară, asigurând o marjă de profit optimizată și control matematic strict asupra consumabilelor.</p>
+                </div>
 
-        <section class="section-block reverse" id="despre-artist">
-            <div class="block-media">
-                <img src="./IMG_20260518_100643.jpg" alt="Bianca Iacoboni Artistry" style="object-position: center top;">
-            </div>
-            <div class="block-text">
-                <span>CREATIVE DIRECTOR</span>
-                <h2>Despre Bianca Iacoboni</h2>
-                <p>Cu o abordare profund înrădăcinată în simetria ideală și armonie, Bianca transpune rânduiala internă în accente rafinate de estetică vizuală. Viziunea ei redefinește frumusețea curată, eliminând opulența artificială pentru a scoate la lumină eleganța autentică și discretă.</p>
-                <p>Inspirată de standardele riguroase ale marilor centre de stil și ghidată de o pasiune absolută pentru detalii bine executate, fiecare lucrare semnată Bianca Iacoboni devine o expresie perfectă a preciziei tehnice îmbinate cu sensibilitatea artistică.</p>
-            </div>
-        </section>
+                <div class="goal-card">
+                    <i class="fa-solid fa-gem"></i>
+                    <h3>Hiper-Exclusivitate</h3>
+                    <p>Poziționarea studioului ca destinație privată de tip retreat estetic. Renunțarea la rulajul mare de clienți în favoarea unor sesiuni intime, cu accent pe tihnă absolută, precizie tehnică ridicată și servicii dedicate segmentului premium.</p>
+                </div>
 
+                <div class="goal-card">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <h3>Scalare prin Educație</h3>
+                    <p>Dezvoltarea accelerată a segmentului Coquete Academy. Transformarea tehnicilor interne în produse educaționale de elită (masterclass-uri de automachiaj și perfecționare), maximizând randamentul timpului de lucru.</p>
+                </div>
+
+                <div class="goal-card">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h3>Standardizare Look-Pro</h3>
+                    <p>Alinierea fiecărui rezultat vizual la exigențele tehnice ale marilor centre metropolitane (Cluj). Implementarea unui flux riguros de captare digitală de înaltă rezoluție pentru portofoliu direct în studio.</p>
+                </div>
+
+            </div>
+
+            <h2 class="section-title">Roadmap Executiv 2026</h2>
+            <div class="roadmap-container">
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">
+                        <span class="roadmap-time">Faza 01 / Q1-Q2 2026</span>
+                        <h4>Comprimarea Portofoliului</h4>
+                        <p>Eliminarea serviciilor adiacente cu marjă mică de profit. Lansarea platformei digitale unificate, optimizarea sistemului de programări și activarea forumului direct pentru consolidarea dialogului cu comunitatea.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">
+                        <span class="roadmap-time">Faza 02 / Q2-Q3 2026</span>
+                        <h4>Focalizare pe Serviciul de Weekend</h4>
+                        <p>Standardizarea și securizarea pachetelor Bridal Glow (Mirese Premium). Implementarea sistemului de pre-consultanță digitală obligatorie pentru reducerea timpilor morți în spațiul fizic din studio.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">
+                        <span class="roadmap-time">Faza 03 / Q3-Q4 2026</span>
+                        <h4>Consolidare Coquete Academy</h4>
+                        <p>Integrarea completă a programelor de automachiaj 1:1 și de grup restrâns ca motor principal de scalare. Calibrarea optimă a trusei capsulă pentru un consum calculat la miligram.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-content">
+                        <span class="roadmap-time">Faza 04 / Orizont 2027</span>
+                        <h4>Autonomie Operatională</h4>
+                        <p>Atingerea pragului de eficiență absolută: stabilitate financiară maximă bazată exclusiv pe un număr fix, restrâns de cliente premium deservite într-un climat de tihnă totală.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
     </main>
 
     <footer>
         <div class="cui-info">
-            COQUETE BEAUTY STUDIO | STUDIO: PĂCLIȘA, HUNEDOARA<br>
-            ARTISTRY & HARMONY CONCEPT © 2026
+            COQUETE BEAUTY STUDIO | CADRU STRATEGIC & DIRECȚII <br>
+            MASTERPLAN EXECUȚIE © 2026
         </div>
     </footer>
 
