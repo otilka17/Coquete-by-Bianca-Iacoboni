@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
+    <!-- Google Tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18106516696"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -11,7 +12,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rezervări Sesiuni Private | Coquete</title>
+    <title>Rezervări Sesiuni Private | Coquete Bianca Iacoboni</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400;1,700&family=Cinzel:wght@400;700;900&family=Inter:wght@200;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -24,249 +25,362 @@
             --ciocolatiu: #261c19; 
             --fildes: #fffcfb; 
             --text-muted: #8c7e7a; 
+            --desktop-margin: 8%;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        body { background: var(--roz-pudrat); color: var(--ciocolatiu); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.8; }
+        body { background: var(--roz-pudrat); color: var(--ciocolatiu); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.7; font-size: 16px; }
 
         /* SCROLL BAR */
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: var(--roz-pudrat); }
         ::-webkit-scrollbar-thumb { background: var(--auriu); border-radius: 2px; }
 
-        /* NAVIGAȚIE */
-        .site-header { position: fixed; top: 0; width: 100%; z-index: 9999; padding: 35px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 252, 251, 0.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--roz-accent); }
-        .brand-logo { font-family: 'Cinzel'; font-size: 1.5rem; font-weight: 700; color: var(--ciocolatiu); text-decoration: none; letter-spacing: 4px; }
+        /* HEADER PREMIUM */
+        .site-header { position: fixed; top: 0; width: 100%; z-index: 9999; padding: 25px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(251, 244, 241, 0.95); backdrop-filter: blur(5px); border-bottom: 1px solid var(--roz-accent); }
+        @media (min-width: 1024px) { .site-header { padding: 20px var(--desktop-margin); } }
+        
+        .brand-logo { font-family: 'Cinzel'; font-size: 1.4rem; font-weight: 700; color: var(--ciocolatiu); text-decoration: none; letter-spacing: 4px; }
         .brand-logo span { color: var(--auriu); }
         
-        .burger { cursor: pointer; z-index: 10001; display: flex; flex-direction: column; gap: 8px; padding: 10px; }
-        .burger span { display: block; width: 30px; height: 1px; background: var(--ciocolatiu); transition: 0.4s; }
-        .burger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-        .burger.active span:nth-child(2) { opacity: 0; }
-        .burger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+        .btn-back { font-family: 'Cinzel'; text-decoration: none; color: var(--ciocolatiu); font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .btn-back:hover { color: var(--auriu); }
 
-        .main-nav { position: fixed; top: 0; right: -100%; height: 100vh; width: 100%; background: var(--fildes); display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.8s cubic-bezier(0.77, 0, 0.175, 1); z-index: 10000; }
-        .main-nav.active { right: 0; }
-        .main-nav a { font-size: 1.6rem; font-family: 'Cinzel'; margin: 15px 0; color: var(--ciocolatiu); letter-spacing: 6px; text-transform: uppercase; text-decoration: none; opacity: 0.5; transition: 0.4s; }
-        .main-nav a:hover { opacity: 1; color: var(--auriu); }
-
-        /* TIMELINE HEADER */
-        .booking-hero { padding: 180px 10% 60px; text-align: center; background: var(--fildes); }
-        .booking-hero span { font-family: 'Cinzel'; color: var(--auriu); letter-spacing: 6px; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 15px; }
-        .booking-hero h1 { font-family: 'Playfair Display'; font-size: clamp(2.2rem, 5vw, 3.8rem); font-style: italic; font-weight: 400; color: var(--ciocolatiu); }
-
-        /* FORM CONTEXT */
-        .booking-section { padding: 40px 10% 120px; background: var(--fildes); display: flex; justify-content: center; }
-        .form-wrapper { width: 100%; max-width: 700px; background: var(--roz-pudrat); padding: 60px; border-radius: 30px; border: 1px solid var(--roz-accent); box-shadow: 0 30px 60px rgba(38, 28, 25, 0.03); }
-
-        .form-group { margin-bottom: 30px; display: flex; flex-direction: column; }
-        .form-group label { font-family: 'Cinzel'; font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; margin-bottom: 10px; color: var(--ciocolatiu); }
-        
-        .form-group input, .form-group select { 
-            padding: 18px 25px; 
-            border: 1px solid var(--roz-accent); 
-            background: var(--fildes); 
-            border-radius: 12px; 
-            font-family: 'Inter', sans-serif; 
-            font-size: 1rem; 
-            color: var(--ciocolatiu); 
-            outline: none; 
-            transition: 0.3s ease; 
+        /* HERO CU IMAGINE BLURATĂ AMBIENTAL */
+        .booking-hero { 
+            position: relative; 
+            padding: 160px 5% 80px; 
+            text-align: center; 
+            background: var(--ciocolatiu);
+            overflow: hidden;
         }
-        .form-group input:focus, .form-group select:focus { border-color: var(--auriu); box-shadow: 0 0 10px rgba(197, 160, 89, 0.1); }
+        .booking-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('./IMG_20260518_100615.jpg');
+            background-size: cover;
+            background-position: center center;
+            filter: blur(8px) opacity(0.2);
+            z-index: 0;
+        }
+        .hero-inside { position: relative; z-index: 1; }
+        .booking-hero span { font-family: 'Cinzel'; color: var(--auriu); font-size: 0.8rem; letter-spacing: 5px; display: block; margin-bottom: 15px; font-weight: 700; text-transform: uppercase; }
+        .booking-hero h1 { font-family: 'Playfair Display'; font-size: clamp(2.2rem, 5vw, 3.8rem); font-style: italic; color: var(--fildes); font-weight: 400; line-height: 1.2; }
 
-        .dateTime-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        /* WRAPPER FORMULAR DE REZERVARE */
+        .booking-wrapper { max-width: 800px; margin: 0 auto; padding: 60px 5% 120px; }
 
-        /* CUSTOM NOTIFICATION INSIDE FORM */
-        .info-note { font-size: 0.85rem; color: var(--auriu); font-style: italic; margin-top: 5px; font-weight: 500; }
+        .booking-card { background: var(--fildes); border: 1px solid var(--roz-accent); padding: 40px 30px; border-radius: 16px; box-shadow: 0 20px 40px rgba(38,28,25,0.02); }
+        .booking-card h2 { font-family: 'Playfair Display'; font-style: italic; font-size: 1.7rem; color: var(--ciocolatiu); font-weight: 400; margin-bottom: 30px; border-left: 2px solid var(--auriu); padding-left: 15px; }
 
-        /* BUTTONS */
-        .btn-submit { 
+        /* PAȘI REZERVARE */
+        .form-group { margin-bottom: 25px; display: flex; flex-direction: column; gap: 8px; }
+        .form-group label { font-family: 'Cinzel'; font-size: 0.75rem; letter-spacing: 2px; color: var(--ciocolatiu); font-weight: 700; text-transform: uppercase; }
+
+        /* SELECTORI ȘI INPUTURI */
+        .form-select, .form-input, .form-textarea { 
             width: 100%; 
-            padding: 22px; 
+            background: var(--roz-pudrat); 
+            border: 1px solid rgba(197, 160, 89, 0.2); 
+            padding: 15px; 
+            border-radius: 8px; 
+            color: var(--ciocolatiu); 
+            font-family: 'Inter', sans-serif; 
+            font-size: 100%;
+            outline: none;
+            transition: 0.3s;
+        }
+        .form-select:focus, .form-input:focus, .form-textarea:focus { border-color: var(--auriu); background: var(--fildes); }
+        .form-textarea { height: 120px; resize: vertical; }
+
+        /* GRID PENTRU DATĂ ȘI ORĂ EXCLUSIVĂ */
+        .date-time-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 600px) { .date-time-grid { grid-template-columns: 1fr 1fr; } }
+
+        /* BUTON REZERVARE */
+        .btn-submit-booking { 
             background: var(--ciocolatiu); 
             color: var(--fildes); 
             font-family: 'Cinzel'; 
+            font-size: 0.85rem; 
+            font-weight: 700; 
+            letter-spacing: 3px; 
+            padding: 18px 35px; 
             border: none; 
             border-radius: 50px; 
-            letter-spacing: 3px; 
-            font-size: 0.9rem; 
-            font-weight: 700; 
             cursor: pointer; 
             transition: 0.4s; 
-            margin-top: 20px;
-            box-shadow: 0 10px 20px rgba(38,28,25,0.15);
+            box-shadow: 0 10px 20px rgba(38,28,25,0.1); 
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
-        .btn-submit:hover { background: var(--auriu); transform: translateY(-2px); box-shadow: 0 15px 30px rgba(197, 160, 89, 0.3); }
+        .btn-submit-booking:hover:not(:disabled) { background: var(--auriu); transform: translateY(-2px); }
+        .btn-submit-booking:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        /* SUCCESS MESSAGE HOLDER */
-        .success-message { display: none; text-align: center; padding: 20px; }
-        .success-message i { font-size: 3.5rem; color: var(--auriu); margin-bottom: 20px; }
-        .success-message h2 { font-family: 'Playfair Display'; font-size: 2.2rem; font-style: italic; margin-bottom: 15px; font-weight: 400; }
-        .success-message p { color: var(--text-muted); font-size: 1.1rem; }
+        /* NOTIFICARE REZERVARE FINĂ (FĂRĂ ALERT DE SYSTEM) */
+        #customToast { 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            z-index: 10000; 
+            transform: translateY(120px); 
+            opacity: 0; 
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            background: var(--ciocolatiu); 
+            color: var(--fildes); 
+            border: 1px solid var(--auriu); 
+            padding: 20px 25px; 
+            border-radius: 12px; 
+            box-shadow: 0 20px 50px rgba(38,28,25,0.15); 
+            max-width: 380px; 
+            display: flex; 
+            align-items: start; 
+            gap: 15px;
+        }
+        #customToast.show { transform: translateY(0); opacity: 1; }
+        .toast-icon { color: var(--auriu); font-size: 1.3rem; }
+        .toast-content h4 { font-family: 'Cinzel'; font-size: 0.75rem; letter-spacing: 2px; color: var(--auriu); margin-bottom: 5px; }
+        .toast-content p { font-size: 0.85rem; font-weight: 300; line-height: 1.5; color: var(--roz-pudrat); }
+
+        /* ELEMENT ROTATIV DE ÎNCĂRCARE */
+        .spinner { animation: rotate 1.5s linear infinite; }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
 
         /* FOOTER */
-        footer { padding: 80px 10% 50px; background: var(--fildes); border-top: 1px solid var(--roz-accent); text-align: center; }
-        .cui-info { font-family: 'Cinzel'; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 3px; margin-top: 35px; border-top: 1px solid var(--roz-accent); padding-top: 35px; line-height: 1.6; }
-
-        @media (max-width: 768px) {
-            .form-wrapper { padding: 35px 20px; border-radius: 20px; }
-            .dateTime-row { grid-template-columns: 1fr; gap: 0; }
-            .booking-hero { padding: 140px 5% 40px; }
-            .booking-section { padding: 20px 5% 80px; }
-        }
-
-        .wa-float { position: fixed; bottom: 40px; left: 40px; color: var(--auriu); font-size: 38px; z-index: 9999; opacity: 0.8; }
+        footer { padding: 60px 5% 40px; background: var(--fildes); border-top: 1px solid var(--roz-accent); text-align: center; }
+        .cui-info { font-family: 'Cinzel'; color: var(--text-muted); font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <a href="https://wa.me/40749229686" class="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <!-- ELEMENT DE NOTIFICARE (CUSTOM TOAST) -->
+    <div id="customToast">
+        <div class="toast-icon"><i class="fa-solid fa-circle-check" id="toastIcon"></i></div>
+        <div class="toast-content">
+            <h4 id="toastTitle">Solicitare Trimisă</h4>
+            <p id="toastMessage">Rezervarea ta este în curs de procesare. Te contactăm curând.</p>
+        </div>
+    </div>
 
     <header class="site-header">
         <a href="index.html" class="brand-logo">COQUETE<span>.</span></a>
-        <div class="burger" id="burger"><span></span><span></span><span></span></div>
-        <nav class="main-nav" id="nav-links">
-            <a href="index.html#concept">Poveste</a>
-            <a href="rezervari.html">Rezervări</a>
-            <a href="curs.html">Masterclass</a>
-            <a href="index.html#portofoliu">Portofoliu</a>
-            <a href="index.html#recenzii">Aprecieri</a>
-            <a href="contact.html">Contact</a>
-        </nav>
+        <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> ÎNAPOI</a>
     </header>
 
-    <section class="booking-hero">
-        <span>EXCLUSIVITATE</span>
-        <h1>Rezervă o Sesiune Privată</h1>
-    </section>
+    <main>
+        <!-- HERO DESIGN EXCLUSIV -->
+        <section class="booking-hero">
+            <div class="hero-inside">
+                <span>RÂNDUIALĂ & EXCLUSIVITATE</span>
+                <h1>Rezervă o Sesiune Privată</h1>
+            </div>
+        </section>
 
-    <section class="booking-section">
-        <div class="form-wrapper">
-            
-            <form id="bookingForm">
-                <div class="form-group">
-                    <label for="nume">Nume Complet</label>
-                    <input type="text" id="nume" name="nume" required placeholder="Ex: Simona Popescu">
-                </div>
-
-                <div class="form-group">
-                    <label for="telefon">Număr Telefon</label>
-                    <input type="tel" id="telefon" name="telefon" required placeholder="Ex: 07xx xxx xxx">
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Adresă Email</label>
-                    <input type="email" id="email" name="email" required placeholder="Ex: nume@email.com">
-                </div>
-
-                <div class="form-group">
-                    <label for="serviciu">Serviciu Solicitat</label>
-                    <select id="serviciu" name="serviciu" required>
-                        <option value="" disabled selected>Selectează serviciul...</option>
-                        <option value="Sesiune Privată Eveniment">Sesiune Privată Eveniment (Machiaj Bridal/Gala)</option>
-                        <option value="Curs Automachiaj Individual">The Self-Portrait Experience (Curs Automachiaj)</option>
-                        <option value="Masterclass Pro-Artist">Pro-Artist Specialization (Masterclass)</option>
-                    </select>
-                </div>
-
-                <div class="dateTime-row">
+        <!-- SECȚIUNE FORMULAR -->
+        <section class="booking-wrapper">
+            <div class="booking-card">
+                <h2>Alege experiența ta de beauty</h2>
+                
+                <form id="bookingForm">
+                    
+                    <!-- PASUL 1: SERVICIUL -->
                     <div class="form-group">
-                        <label for="data">Data Solicitată</label>
-                        <input type="date" id="data" name="data" required>
-                        <span class="info-note">*Doar zile de weekend (Sâm / Dum)</span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="ora">Ora</label>
-                        <select id="ora" name="ora" required>
-                            <option value="" disabled selected>Alege intervalul...</option>
-                            <option value="08:00">08:00 AM</option>
-                            <option value="10:30">10:30 AM</option>
-                            <option value="13:00">13:00 PM</option>
-                            <option value="15:30">15:30 PM</option>
+                        <label for="bookingService">Serviciul Dorit</label>
+                        <select id="bookingService" class="form-select" required>
+                            <option value="" disabled selected>Selectează un serviciu exclusiv...</option>
+                            <option value="Bridal Glow (Pachet Complet Mireasă)">Bridal Glow (Pachet Complet Mireasă)</option>
+                            <option value="Sesiune Privată / Eveniment de Elită">Sesiune Privată / Eveniment de Elită</option>
+                            <option value="Coquete Academy (Curs Automachiaj 1:1)">Coquete Academy (Curs Automachiaj 1:1)</option>
+                            <option value="Masterclass de Perfecționare">Masterclass de Perfecționare</option>
                         </select>
                     </div>
-                </div>
 
-                <button type="submit" class="btn-submit" id="submitBtn">TRIMITE SOLICITAREA</button>
-            </form>
+                    <!-- PASUL 2: DATA & ORA -->
+                    <div class="date-time-grid">
+                        <div class="form-group">
+                            <label for="bookingDate">Data Solicitată</label>
+                            <!-- Blocăm datele din trecut prin JS -->
+                            <input type="date" id="bookingDate" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingTime">Intervalul Orar</label>
+                            <select id="bookingTime" class="form-select" required>
+                                <option value="" disabled selected>Alege o oră rânduită...</option>
+                                <option value="09:00 - Sesiune Dimineață">09:00 - Sesiune Dimineață</option>
+                                <option value="11:30 - Sesiune Amiază">11:30 - Sesiune Amiază</option>
+                                <option value="14:00 - Sesiune După-amiază">14:00 - Sesiune După-amiază</option>
+                                <option value="16:30 - Sesiune Seară">16:30 - Sesiune Seară</option>
+                                <option value="19:00 - Sesiune Exclusivă">19:00 - Sesiune Exclusivă</option>
+                            </select>
+                        </div>
+                    </div>
 
-            <div class="success-message" id="successBlock">
-                <i class="linearicons-heart-pulse fas fa-star"></i>
-                <h2>Vă mulțumim.</h2>
-                <p>Solicitarea dumneavoastră a fost înregistrată cu rânduială. Bianca o va analiza și vă va contacta în cel mai scurt timp pentru confirmarea locului.</p>
+                    <!-- PASUL 3: DATE CONTACT -->
+                    <div class="form-group">
+                        <label for="customerName">Numele Tău Complet</label>
+                        <input type="text" id="customerName" class="form-input" placeholder="Ex: Alexandra Sandu" required>
+                    </div>
+
+                    <div class="date-time-grid">
+                        <div class="form-group">
+                            <label for="customerPhone">Număr Telefon</label>
+                            <input type="tel" id="customerPhone" class="form-input" placeholder="Ex: 0749 229 686" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerEmail">Adresă E-mail</label>
+                            <input type="email" id="customerEmail" class="form-input" placeholder="Ex: contact@coquete.ro" required>
+                        </div>
+                    </div>
+
+                    <!-- DETALII SUPLIMENTARE -->
+                    <div class="form-group">
+                        <label for="bookingNotes">Mențiuni Speciale / Detalii Eveniment</label>
+                        <textarea id="bookingNotes" class="form-textarea" placeholder="Spune-ne mai multe despre tipul evenimentului, rochie, preferințe sau detalii relevante pentru stilul tău..."></textarea>
+                    </div>
+
+                    <!-- BUTON DE CONFIRMARE CU LOADER -->
+                    <button type="submit" id="submitBtn" class="btn-submit-booking">
+                        <span id="btnText">TRIMITE SOLICITAREA</span>
+                        <i id="btnLoader" class="fa-solid fa-circle-notch spinner" style="display: none;"></i>
+                    </button>
+
+                </form>
             </div>
-
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer>
-        <div class="footer-logos">
-            <a href="https://anpc.ro/ce-este-sal/" target="_blank"><img src="./anpc-sal.png" alt="SAL" style="height:40px; margin-right:20px;"></a>
-            <a href="https://anpc.ro/" target="_blank"><img src="./anpc-sol.png" alt="SOL" style="height:40px;"></a>
-        </div>
         <div class="cui-info">
-            COQUETE BEAUTY STUDIO | ARTISTRY & HARMONY CONCEPT<br>
-            STUDIO: PĂCLIȘA, HUNEDOARA • REZERVARE EXCLUSIVĂ DE WEEKEND
+            COQUETE BEAUTY STUDIO | SISTEM REZERVARE PRIVATĂ <br>
+            TIHNĂ ȘI TIMP OPTIMIZAT MATEMATIC © 2026
         </div>
     </footer>
 
-    <script>
-        const burger = document.getElementById('burger');
-        const nav = document.getElementById('nav-links');
-        burger.onclick = () => { nav.classList.toggle('active'); burger.classList.toggle('active'); };
-        nav.onclick = () => { nav.classList.remove('active'); burger.classList.remove('active'); };
-
-        // VALIDARE DOAR WEEKEND-URI (SAMBATA SI DUMINICA)
-        const dateInput = document.getElementById('data');
+    <!-- LOGICA JAVASCRIPT: PRELUARE DATE + EXPONENTIAL BACKOFF + MAKE.COM INTEGRATION + CONVERSION TRACKING -->
+    <script {nonce}>
+        // Blocăm selecția datelor din trecut în calendar
         const today = new Date().toISOString().split('T')[0];
-        dateInput.min = today; // Blocare date din trecut
+        document.getElementById('bookingDate').setAttribute('min', today);
 
-        dateInput.addEventListener('change', function() {
-            const dateParts = this.value.split('-');
-            // Reconstrucție locală precisă anti-timezone offset: new Date(an, luna-1, zi)
-            const chosenDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
-            const dayOfWeek = chosenDate.getDay(); // 0 = Duminică, 6 = Sâmbătă
+        const makeWebhookUrl = "https://hook.eu1.make.com/kl5zil3ff85l8o4i0t9inya4l2xphidd";
 
-            if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-                alert('Sesiunile private Coquete sunt disponibile exclusiv în weekend (Sâmbătă și Duminică). Vă rugăm să alegeți o zi corespunzătoare.');
-                this.value = ''; // Resetează inputul gol
+        // Funcția de afișare notificare custom
+        function triggerNotification(title, message, success = true) {
+            const toast = document.getElementById('customToast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastMessage = document.getElementById('toastMessage');
+
+            toastTitle.innerText = title;
+            toastMessage.innerText = message;
+
+            if (success) {
+                toastIcon.className = "fa-solid fa-circle-check";
+                toastIcon.style.color = "var(--auriu)";
+                toast.style.borderColor = "var(--auriu)";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-exclamation";
+                toastIcon.style.color = "#cc0000";
+                toast.style.borderColor = "#cc0000";
             }
-        });
 
-        // EXPEDIEREA DATELOR CĂTRE AUTOMATIZAREA MAKE
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
+        }
+
+        // Trimitere Formular cu Retry / Exponential Backoff
+        document.getElementById('bookingForm').onsubmit = async function(e) {
             e.preventDefault();
-            
+
             const submitBtn = document.getElementById('submitBtn');
-            submitBtn.innerText = "SE TRIMITE...";
+            const btnText = document.getElementById('btnText');
+            const btnLoader = document.getElementById('btnLoader');
+
+            // Stilizare buton pe Loading
             submitBtn.disabled = true;
+            btnText.style.display = "none";
+            btnLoader.style.display = "inline-block";
 
-            const formData = new FormData(this);
-            const formObject = {};
-            formData.forEach((value, key) => formObject[key] = value);
+            // Structură Payload date
+            const payload = {
+                type: "rezervare_noua",
+                studio: "Coquete Bianca Iacoboni",
+                service: document.getElementById('bookingService').value,
+                date: document.getElementById('bookingDate').value,
+                time: document.getElementById('bookingTime').value,
+                customer_name: document.getElementById('customerName').value,
+                customer_phone: document.getElementById('customerPhone').value,
+                customer_email: document.getElementById('customerEmail').value,
+                notes: document.getElementById('bookingNotes').value || "Nu sunt mențiuni speciale.",
+                timestamp: new Date().toISOString()
+            };
 
-            /* IMPORTANT: Înlocuiește linkul de mai jos cu LINKUL WEBHOOK-ULUI tău generat din Make!
-            */
-            const makeWebhookUrl = 'https://hook.eu1.make.com/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'; 
+            // Implementare Exponential Backoff (retries până la 5 ori cu timpi crescători)
+            const sendRequestWithRetry = async (url, data, retries = 5, delay = 1000) => {
+                try {
+                    const response = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    });
 
-            fetch(makeWebhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formObject)
-            })
-            .then(response => {
-                document.getElementById('bookingForm').style.display = 'none';
-                document.getElementById('successBlock').style.display = 'block';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('A apărut o mică eroare la server. Vă rugăm să încercați din nou sau să ne contactați pe WhatsApp.');
-                submitBtn.innerText = "TRIMITE SOLICITAREA";
-                submitBtn.disabled = false;
-            });
-        });
+                    if (response.ok) {
+                        return true;
+                    }
+                    throw new Error("Eroare server");
+                } catch (error) {
+                    if (retries > 0) {
+                        // Nu facem log în consolă conform guardrail-ului, ci așteptăm în liniște
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return sendRequestWithRetry(url, data, retries - 1, delay * 2);
+                    }
+                    return false;
+                }
+            };
+
+            const isSuccess = await sendRequestWithRetry(makeWebhookUrl, payload);
+
+            if (isSuccess) {
+                // 1. Notificare clientă în interfață
+                triggerNotification(
+                    "Solicitare Înregistrată", 
+                    "Datele tale au fost trimise cu succes. Bianca te va contacta pentru confirmare în scurt timp! ✨", 
+                    true
+                );
+
+                // 2. Declanșarea codului Google Ads Conversion tracking (AW-18106516696)
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'conversion', {
+                        'send_to': 'AW-18106516696/booking_success', // Schimbă eticheta dacă ai una specifică din Google Ads
+                        'value': 1.0,
+                        'currency': 'RON'
+                    });
+                }
+
+                // Resetare formular
+                document.getElementById('bookingForm').reset();
+            } else {
+                // Mesaj user-friendly în caz de eșec după cele 5 încercări de backoff
+                triggerNotification(
+                    "A apărut o eroare", 
+                    "Conexiunea cu serverul de programări a fost întreruptă temporar. Te rugăm să ne contactezi direct pe WhatsApp pentru programare rapidă! 📲", 
+                    false
+                );
+            }
+
+            // Readucem butonul la starea normală
+            submitBtn.disabled = false;
+            btnText.style.display = "inline-block";
+            btnLoader.style.display = "none";
+        };
     </script>
 </body>
 </html>
