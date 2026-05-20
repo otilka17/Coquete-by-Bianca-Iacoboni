@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-    <!-- Google Tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18106516696"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -157,7 +156,6 @@
 </head>
 <body>
 
-    <!-- ELEMENT DE NOTIFICARE (CUSTOM TOAST) -->
     <div id="customToast">
         <div class="toast-icon"><i class="fa-solid fa-circle-check" id="toastIcon"></i></div>
         <div class="toast-content">
@@ -172,7 +170,6 @@
     </header>
 
     <main>
-        <!-- HERO DESIGN EXCLUSIV -->
         <section class="booking-hero">
             <div class="hero-inside">
                 <span>RÂNDUIALĂ & EXCLUSIVITATE</span>
@@ -180,14 +177,12 @@
             </div>
         </section>
 
-        <!-- SECȚIUNE FORMULAR -->
         <section class="booking-wrapper">
             <div class="booking-card">
                 <h2>Alege experiența ta de beauty</h2>
                 
                 <form id="bookingForm">
                     
-                    <!-- PASUL 1: SERVICIUL -->
                     <div class="form-group">
                         <label for="bookingService">Serviciul Dorit</label>
                         <select id="bookingService" class="form-select" required>
@@ -199,7 +194,6 @@
                         </select>
                     </div>
 
-                    <!-- PASUL 2: DATA & ORA -->
                     <div class="date-time-grid">
                         <div class="form-group">
                             <label for="bookingDate">Data Solicitată</label>
@@ -218,7 +212,6 @@
                         </div>
                     </div>
 
-                    <!-- PASUL 3: DATE CONTACT -->
                     <div class="form-group">
                         <label for="customerName">Numele Tău Complet</label>
                         <input type="text" id="customerName" class="form-input" placeholder="Ex: Alexandra Sandu" required>
@@ -235,13 +228,11 @@
                         </div>
                     </div>
 
-                    <!-- DETALII SUPLIMENTARE -->
                     <div class="form-group">
                         <label for="bookingNotes">Mențiuni Speciale / Detalii Eveniment</label>
                         <textarea id="bookingNotes" class="form-textarea" placeholder="Spune-ne mai multe despre tipul evenimentului, rochie, preferințe sau detalii relevante pentru stilul tău..."></textarea>
                     </div>
 
-                    <!-- BUTON DE CONFIRMARE CU LOADER -->
                     <button type="submit" id="submitBtn" class="btn-submit-booking">
                         <span id="btnText">TRIMITE SOLICITAREA</span>
                         <i id="btnLoader" class="fa-solid fa-circle-notch spinner" style="display: none;"></i>
@@ -259,7 +250,6 @@
         </div>
     </footer>
 
-    <!-- LOGICA JAVASCRIPT REPARATĂ: COMBATERE CORS + OPAQUE REDIRECT + AUTOMATIZARE MAKE -->
     <script {nonce}>
         // Blocăm selecția datelor din trecut în calendar
         const today = new Date().toISOString().split('T')[0];
@@ -267,7 +257,6 @@
 
         const makeWebhookUrl = "https://hook.eu1.make.com/kl5zil3ff85l8o4i0t9inya4l2xphidd";
 
-        // Funcția de afișare notificare custom
         function triggerNotification(title, message, success = true) {
             const toast = document.getElementById('customToast');
             const toastIcon = document.getElementById('toastIcon');
@@ -293,7 +282,6 @@
             }, 5000);
         }
 
-        // Trimitere Formular cu Retry / Exponential Backoff + Eliminare CORS Block
         document.getElementById('bookingForm').onsubmit = async function(e) {
             e.preventDefault();
 
@@ -301,12 +289,10 @@
             const btnText = document.getElementById('btnText');
             const btnLoader = document.getElementById('btnLoader');
 
-            // Stilizare buton pe Loading
             submitBtn.disabled = true;
             btnText.style.display = "none";
             btnLoader.style.display = "inline-block";
 
-            // Structură Payload date
             const payload = {
                 type: "rezervare_noua",
                 studio: "Coquete Bianca Iacoboni",
@@ -317,69 +303,49 @@
                 customer_phone: document.getElementById('customerPhone').value,
                 customer_email: document.getElementById('customerEmail').value,
                 notes: document.getElementById('bookingNotes').value || "Nu sunt mențiuni speciale.",
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toLocaleString('ro-RO')
             };
 
-            // Implementare Exponential Backoff cu suport CORS no-cors pentru compatibilitate maximă
-            const sendRequestWithRetry = async (url, data, retries = 5, delay = 1000) => {
-                try {
-                    const response = await fetch(url, {
-                        method: "POST",
-                        mode: "no-cors", // Ignoră verificarea CORS din browser pentru a preveni blocarea cererii
-                        headers: {
-                            "Content-Type": "text/plain" // Păstrează text simplu pentru a evita preflight-ul de securitate
-                        },
-                        body: JSON.stringify(data)
-                    });
+            try {
+                // Trimitere standard JSON curat către Make (Elimină gruparea în câmpul 'Value')
+                const response = await fetch(makeWebhookUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
 
-                    // În mod 'no-cors', browserul returnează o stare opacă (status 0), dar înseamnă că datele au fost transmise cu succes spre Make.com
-                    if (response.ok || response.status === 0 || response.type === 'opaque') {
-                        return true;
+                if (response.ok) {
+                    triggerNotification(
+                        "Solicitare Înregistrată", 
+                        "Datele tale au fost trimise cu succes. Bianca te va contacta pentru confirmare în scurt timp! ✨", 
+                        true
+                    );
+
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-18106516696/booking_success',
+                            'value': 1.0,
+                            'currency': 'RON'
+                        });
                     }
-                    throw new Error("Eroare trimitere");
-                } catch (error) {
-                    if (retries > 0) {
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        return sendRequestWithRetry(url, data, retries - 1, delay * 2);
-                    }
-                    return false;
+
+                    document.getElementById('bookingForm').reset();
+                } else {
+                    throw new Error();
                 }
-            };
-
-            const isSuccess = await sendRequestWithRetry(makeWebhookUrl, payload);
-
-            if (isSuccess) {
-                // 1. Notificare clientă în interfață
-                triggerNotification(
-                    "Solicitare Înregistrată", 
-                    "Datele tale au fost trimise cu succes. Bianca te va contacta pentru confirmare în scurt timp! ✨", 
-                    true
-                );
-
-                // 2. Declanșarea codului Google Ads Conversion tracking (AW-18106516696)
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'conversion', {
-                        'send_to': 'AW-18106516696/booking_success',
-                        'value': 1.0,
-                        'currency': 'RON'
-                    });
-                }
-
-                // Resetare formular
-                document.getElementById('bookingForm').reset();
-            } else {
-                // Mesaj în caz de eroare majoră de rețea
+            } catch (error) {
                 triggerNotification(
                     "A apărut o eroare", 
-                    "Conexiunea cu serverul de programări a întâmpinat o mică pauză. Te rugăm să ne contactezi direct pe WhatsApp pentru programare rapidă! 📲", 
+                    "Conexiunea cu serverul întâmpină o mică pauză. Te rugăm să încerci din nou sau să ne contactezi direct pe WhatsApp! 📲", 
                     false
                 );
+            } finally {
+                submitBtn.disabled = false;
+                btnText.style.display = "inline-block";
+                btnLoader.style.display = "none";
             }
-
-            // Readucem butonul la starea normală
-            submitBtn.disabled = false;
-            btnText.style.display = "inline-block";
-            btnLoader.style.display = "none";
         };
     </script>
 </body>
