@@ -102,17 +102,17 @@
         .hero h1 { font-family: 'Playfair Display'; font-size: clamp(2.2rem, 6vw, 4.5rem); font-style: italic; color: var(--ciocolatiu); line-height: 1.1; margin-bottom: 20px; font-weight: 400; }
         .tagline { font-family: 'Cinzel'; color: var(--auriu); letter-spacing: 8px; font-size: 0.75rem; display: block; margin-bottom: 12px; font-weight: 700; text-transform: uppercase; }
 
-        /* SPLASH SEPARATOR */
+        /* SPLASH SEPARATOR INTEGRAT IMPECABIL */
         .splash-separator { width: 100%; height: 250px; overflow: hidden; border-top: 1px solid var(--roz-accent); border-bottom: 1px solid var(--roz-accent); background-color: var(--fildes); display: flex; align-items: center; justify-content: center; }
         
         @media (min-width: 1024px) {
-            .splash-separator { height: 350px; }
+            .splash-separator { height: 400px; }
         }
         
-        .splash-separator img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.1) opacity(0.8); transition: 1.2s cubic-bezier(0.25, 1, 0.3, 1); }
-        .splash-separator:hover img { filter: grayscale(0) opacity(1); transform: scale(1.03); }
+        .splash-separator img { width: 100%; height: 100%; object-fit: cover; object-position: center center; filter: grayscale(0.05) opacity(0.85); transition: 1.5s cubic-bezier(0.25, 1, 0.3, 1); }
+        .splash-separator:hover img { filter: grayscale(0) opacity(1); transform: scale(1.02); }
 
-        /* CORP EDITORIAL */
+        /* CORP EDITORIAL COREGAT PENTRU PC */
         .magazine-body { background: var(--fildes); }
         .chapter { padding: 80px 5%; display: flex; flex-direction: column; align-items: center; gap: 40px; border-bottom: 1px solid rgba(244, 222, 214, 0.4); opacity: 0; transform: translateY(30px); transition: opacity 1.2s cubic-bezier(0.25, 1, 0.3, 1), transform 1.2s cubic-bezier(0.25, 1, 0.3, 1); }
         
@@ -151,16 +151,22 @@
         @media (min-width: 1024px) {
             .chapter-text p { margin-left: 0; margin-right: 0; text-align: left; max-width: 100%; }
         }
-        
-        /* COQUETE TWO-CARDS GRID LINK STYLE */
-        .dual-cards-container { display: grid; grid-template-columns: 1fr; gap: 20px; width: 100%; margin-bottom: 35px; }
+
+        /* STRUCTURA INTEGRALĂ DE CARDURI REPARATE PENTRU MONITOR */
+        .dual-cards-container { display: grid; grid-template-columns: 1fr; gap: 25px; width: 100%; margin-bottom: 3.5% ; }
         @media (min-width: 600px) { .dual-cards-container { grid-template-columns: 1fr 1fr; } }
         
-        .luxury-link-card { background: var(--fildes); border: 1px solid var(--roz-accent); padding: 30px 20px; text-align: center; text-decoration: none; border-radius: 12px; transition: 0.4s cubic-bezier(0.25, 1, 0.3, 1); display: block; box-shadow: 0 8px 20px rgba(38,28,25,0.01); }
-        .luxury-link-card:hover { transform: translateY(-4px); border-color: var(--auriu); box-shadow: 0 12px 25px rgba(197,160,89,0.08); }
-        .luxury-link-card i { color: var(--auriu); font-size: 1.6rem; margin-bottom: 12px; display: block; }
-        .luxury-link-card h3 { font-family: 'Playfair Display'; font-style: italic; font-size: 1.3rem; color: var(--ciocolatiu); font-weight: 400; margin-bottom: 8px; }
-        .luxury-link-card p { font-size: 0.85rem; color: var(--text-muted); margin: 0; font-weight: 300; }
+        .luxury-link-card { background: var(--fildes); border: 1px solid var(--roz-accent); padding: 25px 20px; text-align: center; text-decoration: none; border-radius: 12px; transition: 0.4s cubic-bezier(0.25, 1, 0.3, 1); display: block; box-shadow: 0 10px 25px rgba(38,28,25,0.01); }
+        .luxury-link-card:hover { transform: translateY(-4px); border-color: var(--auriu); box-shadow: 0 15px 30px rgba(197,160,89,0.08); }
+        
+        /* Caseta fixă anti-deformare pentru imaginile din carduri */
+        .card-img-container { width: 100%; height: 160px; overflow: hidden; border-radius: 8px; margin-bottom: 15px; background: var(--roz-pudrat); }
+        .card-img-container img { width: 100%; height: 100%; object-fit: cover; object-position: center center; transition: 1s ease; }
+        .luxury-link-card:hover .card-img-container img { transform: scale(1.03); }
+
+        .luxury-link-card i { color: var(--auriu); font-size: 1.4rem; margin-bottom: 10px; display: block; }
+        .luxury-link-card h3 { font-family: 'Playfair Display'; font-style: italic; font-size: 1.25rem; color: var(--ciocolatiu); font-weight: 400; margin-bottom: 6px; }
+        .luxury-link-card p { font-size: 0.85rem; color: var(--text-muted); margin: 0; font-weight: 300; line-height: 1.5; }
 
         .btn-mag { display: inline-block; padding: 18px 40px; background: var(--ciocolatiu); color: var(--fildes); font-family: 'Cinzel'; text-decoration: none; border-radius: 50px; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700; transition: 0.4s cubic-bezier(0.25, 1, 0.3, 1); text-align: center; box-shadow: 0 10px 20px rgba(38, 28, 25, 0.1); }
         .btn-mag:hover { transform: translateY(-3px); background: var(--auriu); color: var(--fildes); box-shadow: 0 12px 25px rgba(197, 160, 89, 0.2); }
@@ -275,29 +281,39 @@
         
         <section class="chapter" id="concept">
             <div class="chapter-media">
-                <img src="./IMG_20260518_100615.jpg" alt="Portret Premium Bianca Iacoboni">
+                <img src="./IMG_20260518_100615.jpg" alt="Portret Premium Bianca Iacoboni" style="object-position: center top;">
             </div>
             <div class="chapter-text">
                 <span>CHAPTER 01 / ARMONIE</span>
                 <h2>Manifestul Estetic.</h2>
                 <p>Frumusețea nu se construiește prin straturi artificiale, ci prin accente fine care îți onorează trăsăturile. Transpunem armonia ritmului și a muzicii în linii perfecte de tuș, texturi luminoase și nuanțe calde de roz pudrat și aur, definind noul standard al eleganței discrete.</p>
+                
                 <div class="dual-cards-container">
+                    
                     <a href="obiective.html" class="luxury-link-card">
+                        <div class="card-img-container">
+                            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600" alt="Concept Obiective Coquete">
+                        </div>
                         <i class="fa-solid fa-compass"></i>
                         <h3>Obiective</h3>
                         <p>Direcții strategice și rânduiala Masterplanului 2026.</p>
                     </a>
-                    <a href="obiective.html#despre-artist" class="luxury-link-card">
+
+                    <a href="despreartist.html" class="luxury-link-card">
+                        <div class="card-img-container">
+                            <img src="./IMG_20260518_100643.jpg" alt="Bianca Iacoboni Portret Studio" style="object-position: center top;">
+                        </div>
                         <i class="fa-solid fa-palette"></i>
                         <h3>Despre Artist</h3>
                         <p>Viziunea artistică, standardele înalte și povestea Biancăi.</p>
                     </a>
+
                 </div>
             </div>
         </section>
 
         <section class="splash-separator">
-            <img src="https://images.unsplash.com/photo-1605263134003-a1b17e4bab07?q=80&w=1400" alt="Coquete Premium Luxury Texture Splash">
+            <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=1600" alt="Coquete Premium High Resolution Luxury Splash">
         </section>
 
         <section class="chapter" id="weekend">
