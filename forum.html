@@ -45,7 +45,7 @@
         .btn-back { font-family: 'Cinzel'; text-decoration: none; color: var(--ciocolatiu); font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
         .btn-back:hover { color: var(--auriu); }
 
-        /* HERO CU FUNDAL BLURAT STIL ERMES ITALIA */
+        /* HERO STIL ERMES ITALIA */
         .forum-hero { 
             position: relative; 
             padding: 160px 5% 80px; 
@@ -53,7 +53,6 @@
             background: var(--ciocolatiu);
             overflow: hidden;
         }
-        /* Imaginea de fundal cu blur ambiental fin */
         .forum-hero::before {
             content: '';
             position: absolute;
@@ -70,9 +69,8 @@
 
         /* CONTAINER FORUM SPACE */
         .forum-wrapper { max-width: 900px; margin: 0 auto; padding: 60px 5% 120px; }
-        @media (min-width: 1024px) { .forum-wrapper { padding: 80px 0 140px; } }
 
-        /* ZONA FORMULAR DE SCRIERE (FUNCȚIONAL) */
+        /* FORMULAR DE SCRIERE */
         .write-box { background: var(--fildes); border: 1px solid var(--roz-accent); padding: 40px 30px; border-radius: 16px; box-shadow: 0 20px 40px rgba(38,28,25,0.02); margin-bottom: 60px; }
         .write-box h2 { font-family: 'Playfair Display'; font-style: italic; font-size: 1.7rem; color: var(--ciocolatiu); font-weight: 400; margin-bottom: 25px; border-left: 2px solid var(--auriu); padding-left: 15px; }
         
@@ -98,14 +96,28 @@
         .btn-submit:hover { background: var(--auriu); transform: translateY(-2px); }
         @media (min-width: 600px) { .btn-submit { width: auto; } }
 
-        /* FEED-UL DE COMENTARII / OPINII ADĂUGATE */
+        /* FEED COMENTARII */
         .comments-feed-title { font-family: 'Cinzel'; font-size: 0.8rem; color: var(--auriu); letter-spacing: 4px; margin-bottom: 30px; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid var(--roz-accent); padding-bottom: 15px; }
         
-        .comment-card { background: var(--fildes); border-left: 3px solid var(--auriu); padding: 30px; border-radius: 0 12px 12px 0; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(38,28,25,0.01); }
-        .comment-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .comment-card { background: var(--fildes); border-left: 3px solid var(--auriu); padding: 30px; border-radius: 0 12px 12px 0; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(38,28,25,0.01); position: relative; }
+        .comment-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-right: 30px; }
         .comment-user { font-family: 'Playfair Display'; font-style: italic; font-size: 1.2rem; color: var(--ciocolatiu); font-weight: 400; }
         .comment-date { font-family: 'Inter'; font-size: 0.75rem; color: var(--text-muted); font-weight: 300; }
         .comment-text { color: var(--text-muted); font-size: 1rem; font-weight: 300; text-align: justify; line-height: 1.6; }
+
+        /* BUTONUL DISCRET DE ȘTERGERE */
+        .btn-delete { 
+            position: absolute; 
+            top: 25px; 
+            right: 25px; 
+            color: rgba(38, 28, 25, 0.2); 
+            background: none; 
+            border: none; 
+            cursor: pointer; 
+            font-size: 1.1rem; 
+            transition: 0.3s ease; 
+        }
+        .btn-delete:hover { color: #cc0000; transform: scale(1.1); }
 
         /* FOOTER */
         footer { padding: 60px 5% 40px; background: var(--fildes); border-top: 1px solid var(--roz-accent); text-align: center; }
@@ -148,6 +160,7 @@
             <div id="commentsFeed">
                 
                 <div class="comment-card">
+                    <button class="btn-delete" onclick="removePost(this)"><i class="fa-solid fa-trash"></i></button>
                     <div class="comment-meta">
                         <span class="comment-user">Alexandra M.</span>
                         <span class="comment-date">Astăzi</span>
@@ -156,6 +169,7 @@
                 </div>
 
                 <div class="comment-card">
+                    <button class="btn-delete" onclick="removePost(this)"><i class="fa-solid fa-trash"></i></button>
                     <div class="comment-meta">
                         <span class="comment-user">Elena Teodora</span>
                         <span class="comment-date">Ieri</span>
@@ -176,15 +190,14 @@
     </footer>
 
     <script {nonce}>
+        // Mecanismul de adăugare
         document.getElementById('forumForm').onsubmit = function(e) {
-            e.preventDefault(); // Oprim reîncărcarea paginii
+            e.preventDefault();
             
-            // Preluăm datele introduse de utilizator
             const name = document.getElementById('userName').value;
             const message = document.getElementById('userMessage').value;
             const feed = document.getElementById('commentsFeed');
             
-            // Construim structura unui nou card de comentariu
             const newCard = document.createElement('div');
             newCard.className = 'comment-card';
             newCard.style.opacity = '0';
@@ -192,6 +205,7 @@
             newCard.style.transition = '0.5s ease';
             
             newCard.innerHTML = `
+                <button class="btn-delete" onclick="removePost(this)"><i class="fa-solid fa-trash"></i></button>
                 <div class="comment-meta">
                     <span class="comment-user">${name}</span>
                     <span class="comment-date">Chiar acum</span>
@@ -199,18 +213,25 @@
                 <p class="comment-text">${message}</p>
             `;
             
-            // Îl adăugăm în vârful listei de discuții
             feed.insertBefore(newCard, feed.firstChild);
             
-            // Efect vizual fin de apariție (fade-in)
             setTimeout(() => {
                 newCard.style.opacity = '1';
                 newCard.style.transform = 'translateY(0)';
             }, 50);
             
-            // Resetăm câmpurile formularului pentru o nouă scriere
             document.getElementById('forumForm').reset();
         };
+
+        // Mecanismul de ștergere instantanee
+        function removePost(button) {
+            const card = button.parentElement; // Găsește cardul părinte al butonului apăsat
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                card.remove(); // Îl șterge definitiv din structura paginii
+            }, 400);
+        }
     </script>
 </body>
 </html>
