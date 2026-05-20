@@ -79,22 +79,9 @@
             animation: ambientCrossfade 15s infinite ease-in-out; 
         }
         
-        /* BUG FIX: Reguli de poziționare separate pentru fiecare imagine pe PC */
-        .slide-bg:nth-child(1) { 
-            background-image: url('./IMG_20260518_100643.jpg'); 
-            animation-delay: 0s; 
-            background-position: center top; /* O încadrează pe Bianca perfect de sus */
-        }
-        .slide-bg:nth-child(2) { 
-            background-image: url('./IMG_20260518_095949.jpg'); 
-            animation-delay: 5s; 
-            background-position: center center; /* O centrează impecabil pe a doua */
-        }
-        .slide-bg:nth-child(3) { 
-            background-image: url('./IMG_20260518_100615.jpg'); 
-            animation-delay: 10s; 
-            background-position: center center; /* O centrează impecabil pe a treia */
-        }
+        .slide-bg:nth-child(1) { background-image: url('./IMG_20260518_100643.jpg'); animation-delay: 0s; background-position: center top; }
+        .slide-bg:nth-child(2) { background-image: url('./IMG_20260518_095949.jpg'); animation-delay: 5s; background-position: center center; }
+        .slide-bg:nth-child(3) { background-image: url('./IMG_20260518_100615.jpg'); animation-delay: 10s; background-position: center center; }
 
         @keyframes ambientCrossfade {
             0% { opacity: 0; transform: scale(1.05); filter: blur(2px); }
@@ -115,7 +102,7 @@
         .hero h1 { font-family: 'Playfair Display'; font-size: clamp(2.2rem, 6vw, 4.5rem); font-style: italic; color: var(--ciocolatiu); line-height: 1.1; margin-bottom: 20px; font-weight: 400; }
         .tagline { font-family: 'Cinzel'; color: var(--auriu); letter-spacing: 8px; font-size: 0.75rem; display: block; margin-bottom: 12px; font-weight: 700; text-transform: uppercase; }
 
-        /* SPLASH SEPARATOR INTERACTIV RECEPTIV */
+        /* SPLASH SEPARATOR */
         .splash-separator { width: 100%; height: 250px; overflow: hidden; border-top: 1px solid var(--roz-accent); border-bottom: 1px solid var(--roz-accent); background-color: var(--fildes); display: flex; align-items: center; justify-content: center; }
         
         @media (min-width: 1024px) {
@@ -165,6 +152,16 @@
             .chapter-text p { margin-left: 0; margin-right: 0; text-align: left; max-width: 100%; }
         }
         
+        /* COQUETE TWO-CARDS GRID LINK STYLE */
+        .dual-cards-container { display: grid; grid-template-columns: 1fr; gap: 20px; width: 100%; margin-bottom: 35px; }
+        @media (min-width: 600px) { .dual-cards-container { grid-template-columns: 1fr 1fr; } }
+        
+        .luxury-link-card { background: var(--fildes); border: 1px solid var(--roz-accent); padding: 30px 20px; text-align: center; text-decoration: none; border-radius: 12px; transition: 0.4s cubic-bezier(0.25, 1, 0.3, 1); display: block; box-shadow: 0 8px 20px rgba(38,28,25,0.01); }
+        .luxury-link-card:hover { transform: translateY(-4px); border-color: var(--auriu); box-shadow: 0 12px 25px rgba(197,160,89,0.08); }
+        .luxury-link-card i { color: var(--auriu); font-size: 1.6rem; margin-bottom: 12px; display: block; }
+        .luxury-link-card h3 { font-family: 'Playfair Display'; font-style: italic; font-size: 1.3rem; color: var(--ciocolatiu); font-weight: 400; margin-bottom: 8px; }
+        .luxury-link-card p { font-size: 0.85rem; color: var(--text-muted); margin: 0; font-weight: 300; }
+
         .btn-mag { display: inline-block; padding: 18px 40px; background: var(--ciocolatiu); color: var(--fildes); font-family: 'Cinzel'; text-decoration: none; border-radius: 50px; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700; transition: 0.4s cubic-bezier(0.25, 1, 0.3, 1); text-align: center; box-shadow: 0 10px 20px rgba(38, 28, 25, 0.1); }
         .btn-mag:hover { transform: translateY(-3px); background: var(--auriu); color: var(--fildes); box-shadow: 0 12px 25px rgba(197, 160, 89, 0.2); }
 
@@ -255,7 +252,7 @@
             <a href="index.html#concept">Poveste</a>
             <a href="rezervari.html">Rezervări</a>
             <a href="curs.html">Masterclass</a>
-            <a href="portofoliu.html">Portofoliu</a>
+            <a href="index.html#forum">Forum</a>
             <a href="index.html#recenzii">Aprecieri</a>
             <a href="contact.html">Contact</a>
         </nav>
@@ -284,7 +281,18 @@
                 <span>CHAPTER 01 / ARMONIE</span>
                 <h2>Manifestul Estetic.</h2>
                 <p>Frumusețea nu se construiește prin straturi artificiale, ci prin accente fine care îți onorează trăsăturile. Transpunem armonia ritmului și a muzicii în linii perfecte de tuș, texturi luminoase și nuanțe calde de roz pudrat și aur, definind noul standard al eleganței discrete.</p>
-                <a href="portofoliu.html" class="btn-mag">PROFIL EDITORIAL</a>
+                <div class="dual-cards-container">
+                    <a href="obiective.html" class="luxury-link-card">
+                        <i class="fa-solid fa-compass"></i>
+                        <h3>Obiective</h3>
+                        <p>Direcții strategice și rânduiala Masterplanului 2026.</p>
+                    </a>
+                    <a href="obiective.html#despre-artist" class="luxury-link-card">
+                        <i class="fa-solid fa-palette"></i>
+                        <h3>Despre Artist</h3>
+                        <p>Viziunea artistică, standardele înalte și povestea Biancăi.</p>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -316,15 +324,15 @@
             </div>
         </section>
 
-        <section class="chapter" id="portofoliu">
+        <section class="chapter" id="forum">
             <div class="chapter-media">
-                <img src="./IMG_20260518_095927.jpg" alt="Portofoliu machiaj editorial ochi deschisi">
+                <img src="./IMG_20260518_095927.jpg" alt="Comunitate si dialog forum alternativ">
             </div>
             <div class="chapter-text">
-                <span>CHAPTER 04 / STANDARDE</span>
-                <h2>Look-Pro Selection.</h2>
-                <p>Inspirat de exigențele marilor centre de stil precum Clujul, portofoliul nostru reflectă machiajul curat, fotografia luminoasă și simetria ideală. Fiecare transformare este calibrată pentru a arăta impecabil atât în realitate, cât și sub lentila camerelor foto.</p>
-                <a href="https://wa.me/40749229686" class="btn-mag">VEZI PORTOFOLIU</a>
+                <span>CHAPTER 04 / COMUNITATE</span>
+                <h2>Hațeg Alternativ Forum.</h2>
+                <p>Un spațiu dedicat dialogului liber, ideilor curajoase și proiectelor care rânduiesc viitorul regiunii noastre. Credem în puterea comunității care se implică. Intră în arenă, deschide un subiect nou, scrie-ți perspectiva și conectează-te cu oameni care gândesc la fel ca tine.</p>
+                <a href="forum.html" class="btn-mag">ACCESEAZĂ FORUMUL</a>
             </div>
         </section>
 
