@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coquete Video Studio & Voiceover Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Luxury Gold & Cream (stone-50, amber-500, stone-900, cream-100) -->
+    <!-- Application Structure Plan: We designed an interactive, dual-pane video production studio. The left side features an animated high-fidelity mobile smartphone mockup that plays real-time visual mockups of the chosen video, synchronized with interactive captions, a Web Audio-generated background soundtrack, and a synthesized Romanian voiceover. The right side features a real-time Storyboard & Script Editor where users can modify overlays, durations, and voiceover scripts, along with an interactive export tool. This layout was chosen to give the user complete control over the 'actual video' creation process, bridging the gap between static scripts and a real video experience. -->
+    <!-- Visualization & Content Choices: Interactive Animations -> Goal: Simulate real video editing -> Presentation: Dynamic CSS transitions, typing effects, sliding modals -> Interaction: Live Play/Pause, scrubbing timeline, editing variables -> Justification: Replaces static text with a living, customizable visual representation of the final clip. Web Audio Ambient Synthesizer -> Goal: Ambient Audio -> Presentation: Sound wave visualizer -> Interaction: Synthesizes luxury ambient pads based on current video vibe. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #fdfbf7;
+            color: #1c1917;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Simulated Phone Frame Glow */
+        .phone-container {
+            box-shadow: 0 25px 50px -12px rgba(212, 175, 55, 0.15), 0 0 0 12px #1c1917, 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Sound wave animation */
+        @keyframes bounce-slow {
+            0%, 100% { height: 4px; }
+            50% { height: 28px; }
+        }
+        .sound-bar {
+            animation: bounce-slow 1.2s ease-in-out infinite;
+        }
+        .sound-bar:nth-child(2) { animation-delay: 0.15s; }
+        .sound-bar:nth-child(3) { animation-delay: 0.3s; }
+        .sound-bar:nth-child(4) { animation-delay: 0.45s; }
+        .sound-bar:nth-child(5) { animation-delay: 0.6s; }
+
+        /* Elegant slide transitions */
+        .scene-container {
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Typing cursor animation */
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        .cursor-blink {
+            border-right: 2px solid #d97706;
+            animation: blink 0.75s step-end infinite;
+        }
+    </style>
+</head>
+<body class="antialiased py-8 px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-7xl mx-auto space-y-8">
+        
+        <!-- HEADER -->
+        <header class="flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-stone-100 gap-4">
+            <div class="text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start space-x-2 text-amber-600 font-bold tracking-widest text-xs uppercase mb-1">
+                    <span>✨</span>
+                    <span>Studio Video Interactiv</span>
+                    <span>✨</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-semibold text-stone-900">Coquete Video Maker</h1>
+                <p class="text-stone-500 font-serif italic text-sm mt-1">Generați, editați și simulați videoclipurile promoționale în timp real.</p>
+            </div>
+            
+            <!-- Video Switcher -->
+            <div class="flex bg-stone-100 p-1.5 rounded-xl border border-stone-200">
+                <button id="btn-v1" onclick="studio.switchVideo('v1')" class="px-5 py-2.5 rounded-lg text-sm font-bold transition-all bg-white text-stone-950 shadow-sm">
+                    🎥 Video 1: Auto-Machiaj
+                </button>
+                <button id="btn-v2" onclick="studio.switchVideo('v2')" class="px-5 py-2.5 rounded-lg text-sm font-bold transition-all text-stone-500 hover:text-stone-900">
+                    👰 Video 2: Bridal Glow
+                </button>
+            </div>
+        </header>
+
+        <!-- INTRODUCTORY PARAGRAPH -->
+        <div class="bg-amber-50/50 border border-amber-100 p-5 rounded-2xl text-stone-700 text-sm leading-relaxed">
+            <p><strong>Bine ai venit în studioul tău de producție!</strong> Această secțiune îți oferă o simulare directă a clipurilor tale video, rezolvând nevoia de a vedea cum va arăta și cum va suna produsul final. În partea stângă ai un <strong>simulator de smartphone</strong> capabil să redea cadrele animate din site, să ruleze subtitrările sincronizate și să redea voiceover-ul prin sinteză vocală. În partea dreaptă, poți <strong>modifica scenariul pe loc</strong> sau poți exporta textele pregătite pentru montajul final în aplicații precum CapCut.</p>
+        </div>
+
+        <!-- MAIN LAYOUT -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- LEFT COLUMN: MOBILE PHONE VIDEO PLAYER (4 Cols) -->
+            <div class="lg:col-span-5 flex flex-col items-center">
+                
+                <!-- PHONE CONTAINER -->
+                <div class="phone-container w-[340px] h-[640px] rounded-[48px] bg-stone-950 relative overflow-hidden flex flex-col select-none border-4 border-stone-800">
+                    
+                    <!-- Phone Notch & Dynamic Island Mockup -->
+                    <div class="absolute top-3 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-full z-50 flex items-center justify-between px-4">
+                        <span class="w-2.5 h-2.5 bg-stone-900 rounded-full"></span>
+                        <span class="w-1.5 h-1.5 bg-stone-900 rounded-full"></span>
+                    </div>
+
+                    <!-- VIDEO SCREEN CONTENT -->
+                    <div class="flex-grow relative overflow-hidden bg-gradient-to-b from-stone-900 to-stone-950 flex items-center justify-center">
+                        
+                        <!-- Dynamic Background Overlay (changes per scene) -->
+                        <div id="video-bg" class="absolute inset-0 opacity-40 bg-cover bg-center transition-all duration-1000 transform scale-100" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=600');"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+
+                        <!-- LIVE ANIMATED MOCKUPS (Rendered dynamically based on current scene) -->
+                        <div class="absolute inset-0 z-10 flex flex-col justify-between p-6 pt-16 pb-24 text-white">
+                            
+                            <!-- Header Info -->
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-stone-950 font-bold text-xs shadow-md">C</div>
+                                    <div>
+                                        <p class="text-xs font-bold tracking-wide">Coquete Academy</p>
+                                        <p class="text-[9px] text-stone-400">Promovat • Bianca Iacoboni</p>
+                                    </div>
+                                </div>
+                                <div class="px-2.5 py-1 bg-amber-500/80 text-stone-950 text-[10px] font-bold rounded-full tracking-wider uppercase">Live Preview</div>
+                            </div>
+
+                            <!-- SCREEN CONTENT AREA (Changes per scene) -->
+                            <div id="screen-visuals" class="flex-grow flex items-center justify-center py-4">
+                                <!-- JS Injects Custom CSS/HTML Interactive Components here -->
+                            </div>
+
+                            <!-- SUBTITLES / CAPTIONS LAYER (Simulating TikTok / Reels) -->
+                            <div class="space-y-3">
+                                <div class="flex justify-center">
+                                    <div id="video-caption" class="bg-black/80 backdrop-blur-sm text-center px-4 py-2.5 rounded-xl border border-white/10 max-w-[280px] shadow-lg">
+                                        <p class="text-amber-400 text-sm font-extrabold tracking-wide uppercase leading-snug transform scale-100 transition-transform" id="caption-text">
+                                            Se încarcă videoclipul...
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Audio wave icon representing playing audio -->
+                                <div class="flex justify-center items-end space-x-1 h-8 opacity-60" id="sound-indicator">
+                                    <span class="sound-bar w-1 bg-amber-500 rounded-full"></span>
+                                    <span class="sound-bar w-1 bg-amber-500 rounded-full"></span>
+                                    <span class="sound-bar w-1 bg-amber-500 rounded-full"></span>
+                                    <span class="sound-bar w-1 bg-amber-500 rounded-full"></span>
+                                    <span class="sound-bar w-1 bg-amber-500 rounded-full"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- PHONE PLAYBACK CONTROLS & TIMELINE -->
+                    <div class="h-24 bg-stone-900 border-t border-stone-800 p-4 flex flex-col justify-between z-40">
+                        
+                        <!-- Timeline Slider -->
+                        <div class="relative w-full">
+                            <input type="range" id="timeline-scrubber" min="0" max="100" value="0" step="1" oninput="studio.scrub(this.value)" class="w-full h-1 bg-stone-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                            <div class="flex justify-between text-[10px] text-stone-400 mt-1 font-bold">
+                                <span id="current-time-label">0:00</span>
+                                <span id="total-time-label">0:20</span>
+                            </div>
+                        </div>
+
+                        <!-- Buttons Row -->
+                        <div class="flex justify-between items-center">
+                            <!-- Theme Customizer inside Phone -->
+                            <div class="flex space-x-1">
+                                <button onclick="studio.setTheme('nude')" class="w-5 h-5 rounded-full bg-[#f5ebe0] border border-white/20" title="Nude Theme"></button>
+                                <button onclick="studio.setTheme('gold')" class="w-5 h-5 rounded-full bg-[#d4af37] border border-white/20" title="Gold Theme"></button>
+                                <button onclick="studio.setTheme('midnight')" class="w-5 h-5 rounded-full bg-[#1c1917] border border-white/20" title="Midnight Theme"></button>
+                            </div>
+
+                            <!-- Play/Pause -->
+                            <button id="btn-play-pause" onclick="studio.togglePlay()" class="w-10 h-10 rounded-full bg-amber-500 hover:bg-amber-400 text-stone-950 flex items-center justify-center font-bold text-lg shadow-md transition-transform active:scale-95">
+                                ▶
+                            </button>
+
+                            <!-- Audio Mute / Unmute -->
+                            <button id="btn-mute" onclick="studio.toggleMute()" class="text-stone-400 hover:text-white font-bold text-sm">
+                                🔊 Voiceover
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Live Voice Selector Hint -->
+                <div class="mt-4 text-center">
+                    <p class="text-xs text-stone-500">🔊 Pentru cea mai bună experiență, asigurați-vă că volumul este pornit. Voiceover-ul va fi recitat automat în limba română.</p>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: INTERACTIVE EDITOR & STORYBOARD (7 Cols) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- SCRIPT EDITOR & STORYBOARD SECTION -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100 space-y-4">
+                    <div class="flex justify-between items-center border-b border-stone-100 pb-3">
+                        <div>
+                            <h2 class="text-xl font-semibold text-stone-900" id="editor-title">Editor Scenariu: Video 1</h2>
+                            <p class="text-xs text-stone-400">Modificați textele sau timpii pentru a schimba videoclipul în timp real.</p>
+                        </div>
+                        <button onclick="studio.resetToDefault()" class="text-xs text-amber-600 font-bold hover:underline">
+                            🔄 Resetează la scenariul inițial
+                        </button>
+                    </div>
+
+                    <!-- SCENE LIST (Interactive Cards) -->
+                    <div class="space-y-3 max-h-[340px] overflow-y-auto pr-2" id="scene-editor-list">
+                        <!-- JS injects interactive list elements -->
+                    </div>
+                </div>
+
+                <!-- ACTIVE SCENE LIVE CUSTOMIZER (Fine Tuning) -->
+                <div class="bg-stone-900 text-white p-6 rounded-2xl shadow-md border border-stone-800 space-y-4">
+                    <h3 class="text-lg font-serif font-semibold text-amber-400 flex items-center space-x-2">
+                        <span>✏️</span>
+                        <span>Personalizează Scena Selectată</span>
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-stone-400 uppercase tracking-wider mb-1">Subtitrare pe ecran (Captions)</label>
+                            <input type="text" id="edit-caption" oninput="studio.updateActiveSceneData()" class="w-full bg-stone-850 border border-stone-700 rounded-lg p-2.5 text-sm text-white focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-400 uppercase tracking-wider mb-1">Durată scenă (secunde)</label>
+                            <input type="number" id="edit-duration" min="2" max="15" onchange="studio.updateActiveSceneData()" class="w-full bg-stone-850 border border-stone-700 rounded-lg p-2.5 text-sm text-white focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-stone-400 uppercase tracking-wider mb-1">Text recitat de Voiceover (RO)</label>
+                            <textarea id="edit-vo-text" rows="2" oninput="studio.updateActiveSceneData()" class="w-full bg-stone-850 border border-stone-700 rounded-lg p-2.5 text-sm text-white focus:ring-1 focus:ring-amber-500 focus:outline-none resize-none"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EXPORT & HELP TOOLS -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-stone-400 mb-2">📥 Export Text pentru CapCut</h4>
+                        <p class="text-xs text-stone-500 mb-3">Copiază automat tot scenariul formatat cu timpi exacti pentru a-l pune direct în aplicația de editare video.</p>
+                        <button onclick="studio.copyCapCutFormat()" class="w-full py-2.5 px-4 bg-stone-800 hover:bg-stone-700 text-white font-bold rounded-xl text-xs transition-colors flex items-center justify-center space-x-2">
+                            <span>📋</span>
+                            <span>Copiază Scenariul Complet</span>
+                        </button>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-stone-400 mb-2">🎵 Background Music Vibe</h4>
+                        <p class="text-xs text-stone-500 mb-3">Setați stilul muzicii de fundal rulate de sintetizatorul nostru Web Audio.</p>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button id="synth-lofi" onclick="synth.setGenre('lofi')" class="py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-xs font-bold border border-stone-200 transition-colors">Lo-Fi</button>
+                            <button id="synth-luxury" onclick="synth.setGenre('luxury')" class="py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg text-xs font-bold border border-amber-200 transition-colors">Luxury</button>
+                            <button id="synth-none" onclick="synth.setGenre('none')" class="py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-xs font-bold border border-stone-200 transition-colors">Fără sunet</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- NOTIFICATION SYSTEM -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-stone-900 text-white px-5 py-3 rounded-xl shadow-2xl border border-stone-800 translate-y-20 opacity-0 transition-all duration-300 z-50 text-sm flex items-center space-x-2">
+        <span id="toast-icon">✨</span>
+        <span id="toast-message">Mesaj succes!</span>
+    </div>
+
+    <script>
+        // Core video data based on Romananian request
+        const initialVideos = {
+            v1: {
+                title: "VIDEO 1: Curs Auto-Machiaj & Cadoul",
+                theme: "nude",
+                bgImage: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=600",
+                scenes: [
+                    {
+                        duration: 3,
+                        caption: "Cum să te machiezi ca un PRO + 30% REDUCERE? 👇",
+                        vo: "Vrei să înveți secretele unui machiaj impecabil pe care să ți-l faci singură acasă...",
+                        type: "intro_nude"
+                    },
+                    {
+                        duration: 5,
+                        caption: "OFERTĂ LIMITATĂ! REZERVĂ ACUM ⚠️",
+                        vo: "...și în același timp să primești un discount masiv de treizeci la sută pentru următorul tău eveniment?",
+                        type: "popup"
+                    },
+                    {
+                        duration: 4,
+                        caption: "Am lansat Cursul de Auto-Machiaj Coquete! 💄",
+                        vo: "Am lansat cursul de Auto Machiaj Coquete, unde înveți pas cu pas tot ce ți se potrivește.",
+                        type: "palette"
+                    },
+                    {
+                        duration: 3,
+                        caption: "De la bază până la tehnici avansate ✨",
+                        vo: "De la pregătirea corectă a tenului până la tehnici avansate, adaptate perfect trăsăturilor tale.",
+                        type: "features"
+                    },
+                    {
+                        duration: 5,
+                        caption: "LOCURI LIMITATE. Click pe Link în BIO! 🔗",
+                        vo: "Locurile sunt extrem de limitate. Intră acum pe link ul din bio, rezervă-ți locul și revendică reducerea de treizeci la sută!",
+                        type: "form_fill"
+                    }
+                ]
+            },
+            v2: {
+                title: "VIDEO 2: Experiență Premium Bridal Glow",
+                theme: "gold",
+                bgImage: "https://images.unsplash.com/photo-1594744803329-e58b31de215f?q=80&w=600",
+                scenes: [
+                    {
+                        duration: 3,
+                        caption: "Pregătirea pentru cel mai important eveniment începe așa... ✨",
+                        vo: "Urmează să fii mireasă sau ai un eveniment special anul acesta și nu ai găsit încă machiorul potrivit?",
+                        type: "intro_bride"
+                    },
+                    {
+                        duration: 5,
+                        caption: "La Coquete, rezervarea este o experiență de lux 🤍",
+                        vo: "La Coquete, rezervarea look ului tău de vis este la fel de relaxantă ca experiența din salon.",
+                        type: "features_lux"
+                    },
+                    {
+                        duration: 5,
+                        caption: "Pachetul complet: Bridal Glow 👰",
+                        vo: "Intri pe site, îți alegi pachetul dorit, cum ar fi Bridal Glow, pentru o strălucire de lungă durată...",
+                        type: "dropdown_select"
+                    },
+                    {
+                        duration: 4,
+                        caption: "Alege-ți data și ora preferată! 🗓️",
+                        vo: "...îți selectezi data și ora perfectă pentru programul tău și completezi detaliile rapide.",
+                        type: "calendar_select"
+                    },
+                    {
+                        duration: 8,
+                        caption: "CONFIRMAT. Te așteptăm cu drag! 📲",
+                        vo: "Fără telefoane interminabile. Cu un singur click, ești cu un pas mai aproape de look ul tău perfect. Rezervă acum pe link ul din bio!",
+                        type: "success_conf"
+                    }
+                ]
+            }
+        };
+
+        // Deep copy helper for resetting
+        function cloneData(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+
+        let activeVideoData = cloneData(initialVideos);
+
+        // Ambient Background Music Generator using Web Audio API
+        const synth = {
+            audioCtx: null,
+            isPlaying: false,
+            genre: 'luxury', // 'luxury', 'lofi', 'none'
+            bassNode: null,
+            padNode: null,
+            gainNode: null,
+            melodyInterval: null,
+
+            init() {
+                if (this.audioCtx) return;
+                this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                this.gainNode = this.audioCtx.createGain();
+                this.gainNode.gain.setValueAtTime(0.08, this.audioCtx.currentTime); // keep it low background
+                this.gainNode.connect(this.audioCtx.destination);
+            },
+
+            setGenre(genre) {
+                this.genre = genre;
+                const buttons = ['synth-lofi', 'synth-luxury', 'synth-none'];
+                buttons.forEach(id => {
+                    const btn = document.getElementById(id);
+                    if (id === `synth-${genre}`) {
+                        btn.className = "py-2 bg-amber-500 hover:bg-amber-600 text-stone-950 rounded-lg text-xs font-bold border border-amber-600 transition-colors";
+                    } else {
+                        btn.className = "py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-xs font-bold border border-stone-200 transition-colors";
+                    }
+                });
+
+                if (genre === 'none') {
+                    this.stop();
+                } else if (this.isPlaying) {
+                    this.stop();
+                    this.start();
+                }
+            },
+
+            start() {
+                if (this.genre === 'none') return;
+                this.init();
+                if (this.isPlaying) return;
+                this.isPlaying = true;
+
+                if (this.audioCtx.state === 'suspended') {
+                    this.audioCtx.resume();
+                }
+
+                const now = this.audioCtx.currentTime;
+                
+                // Bass Oscillator (Warm deep tone)
+                this.bassOsc = this.audioCtx.createOscillator();
+                this.bassOsc.type = 'triangle';
+                this.bassOsc.frequency.setValueAtTime(this.genre === 'luxury' ? 110 : 82.4, now); // A2 or E2
+                
+                const bassFilter = this.audioCtx.createBiquadFilter();
+                bassFilter.type = 'lowpass';
+                bassFilter.frequency.setValueAtTime(200, now);
+
+                this.bassOsc.connect(bassFilter);
+                bassFilter.connect(this.gainNode);
+                this.bassOsc.start(now);
+
+                // Luxury Pads / Arpeggiator simulation
+                this.padOsc = this.audioCtx.createOscillator();
+                this.padOsc.type = 'sine';
+                this.padOsc.frequency.setValueAtTime(220, now); // A3
+
+                const padGain = this.audioCtx.createGain();
+                padGain.gain.setValueAtTime(0.4, now);
+
+                this.padOsc.connect(padGain);
+                padGain.connect(this.gainNode);
+                this.padOsc.start(now);
+
+                // Simulated rhythm/chord progression generator
+                let beatCount = 0;
+                this.melodyInterval = setInterval(() => {
+                    if (!this.isPlaying) return;
+                    const chordNow = this.audioCtx.currentTime;
+                    beatCount++;
+                    
+                    // Progression transitions
+                    let chordFreqs = this.genre === 'luxury' 
+                        ? [220, 277.18, 329.63, 440] // A Maj 7 arpeggio components
+                        : [196, 246.94, 293.66, 392]; // G Maj 7 arpeggio components
+                    
+                    const freq = chordFreqs[beatCount % chordFreqs.length];
+                    this.padOsc.frequency.exponentialRampToValueAtTime(freq, chordNow + 0.5);
+
+                    // Bass movement
+                    if (beatCount % 4 === 0) {
+                        const bassFreq = this.genre === 'luxury' ? [110, 130.81, 146.83][(beatCount/4)%3] : [82.4, 98.0, 110.0][(beatCount/4)%3];
+                        this.bassOsc.frequency.exponentialRampToValueAtTime(bassFreq, chordNow + 0.8);
+                    }
+                }, 1000);
+            },
+
+            stop() {
+                this.isPlaying = false;
+                if (this.melodyInterval) clearInterval(this.melodyInterval);
+                if (this.bassOsc) {
+                    try { this.bassOsc.stop(); } catch(e){}
+                }
+                if (this.padOsc) {
+                    try { this.padOsc.stop(); } catch(e){}
+                }
+            }
+        };
+
+        // Video Studio Application Engine
+        const studio = {
+            currentVid: 'v1',
+            isPlaying: false,
+            currentTime: 0,
+            activeSceneIndex: 0,
+            timer: null,
+            theme: 'nude',
+            isMuted: false, // Voiceover active by default
+            lastSpokenSceneIndex: -1,
+
+            init() {
+                this.renderScenesList();
+                this.updateActiveSceneCustomizer();
+                this.updateVideoUI();
+                synth.setGenre('luxury');
+            },
+
+            switchVideo(vidKey) {
+                this.pause();
+                this.currentVid = vidKey;
+                this.currentTime = 0;
+                this.activeSceneIndex = 0;
+                this.lastSpokenSceneIndex = -1;
+                
+                // Toggle active buttons
+                document.getElementById('btn-v1').className = vidKey === 'v1'
+                    ? "px-5 py-2.5 rounded-lg text-sm font-bold transition-all bg-white text-stone-950 shadow-sm"
+                    : "px-5 py-2.5 rounded-lg text-sm font-bold transition-all text-stone-500 hover:text-stone-900";
+                
+                document.getElementById('btn-v2').className = vidKey === 'v2'
+                    ? "px-5 py-2.5 rounded-lg text-sm font-bold transition-all bg-white text-stone-950 shadow-sm"
+                    : "px-5 py-2.5 rounded-lg text-sm font-bold transition-all text-stone-500 hover:text-stone-900";
+
+                document.getElementById('editor-title').textContent = `Editor Scenariu: ${vidKey === 'v1' ? 'Video 1' : 'Video 2'}`;
+
+                this.renderScenesList();
+                this.updateActiveSceneCustomizer();
+                this.updateVideoUI();
+            },
+
+            setTheme(themeName) {
+                this.theme = themeName;
+                const overlay = document.getElementById('video-bg');
+                
+                if (themeName === 'nude') {
+                    overlay.style.backgroundColor = '#f5ebe0';
+                    overlay.style.backgroundImage = "url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=600')";
+                } else if (themeName === 'gold') {
+                    overlay.style.backgroundColor = '#f4e9cd';
+                    overlay.style.backgroundImage = "url('https://images.unsplash.com/photo-1594744803329-e58b31de215f?q=80&w=600')";
+                } else if (themeName === 'midnight') {
+                    overlay.style.backgroundColor = '#0c0a09';
+                    overlay.style.backgroundImage = "url('https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=600')";
+                }
+                
+                this.updateVideoUI();
+                this.showToast("🎨", `Tema setată pe: ${themeName.toUpperCase()}`);
+            },
+
+            getTotalDuration() {
+                return activeVideoData[this.currentVid].scenes.reduce((sum, s) => sum + s.duration, 0);
+            },
+
+            renderScenesList() {
+                const list = document.getElementById('scene-editor-list');
+                list.innerHTML = '';
+                
+                const scenes = activeVideoData[this.currentVid].scenes;
+                
+                scenes.forEach((scene, i) => {
+                    const card = document.createElement('div');
+                    card.className = `p-3.5 rounded-xl border transition-all cursor-pointer flex justify-between items-center ${
+                        i === this.activeSceneIndex 
+                            ? 'bg-amber-500/10 border-amber-500 text-stone-900 shadow-sm' 
+                            : 'bg-stone-50 border-stone-200 text-stone-700 hover:bg-stone-100'
+                    }`;
+                    card.onclick = () => {
+                        this.jumpToScene(i);
+                    };
+
+                    card.innerHTML = `
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs font-bold text-stone-400">#${i + 1}</span>
+                                <span class="text-xs font-extrabold uppercase bg-amber-200/50 px-2 py-0.5 rounded text-amber-900">${scene.type.replace('_', ' ')}</span>
+                                <span class="text-xs text-stone-400">⏱️ ${scene.duration}s</span>
+                            </div>
+                            <p class="text-sm font-semibold truncate max-w-[320px]">${scene.caption}</p>
+                        </div>
+                        <div class="text-xs font-serif italic text-stone-400 hover:text-amber-500">Apasă pentru editare</div>
+                    `;
+                    list.appendChild(card);
+                });
+            },
+
+            updateActiveSceneCustomizer() {
+                const scene = activeVideoData[this.currentVid].scenes[this.activeSceneIndex];
+                document.getElementById('edit-caption').value = scene.caption;
+                document.getElementById('edit-duration').value = scene.duration;
+                document.getElementById('edit-vo-text').value = scene.vo;
+            },
+
+            updateActiveSceneData() {
+                const scene = activeVideoData[this.currentVid].scenes[this.activeSceneIndex];
+                scene.caption = document.getElementById('edit-caption').value;
+                scene.duration = parseInt(document.getElementById('edit-duration').value) || 3;
+                scene.vo = document.getElementById('edit-vo-text').value;
+
+                // Live update elements
+                this.renderScenesList();
+                this.updateVideoUI();
+            },
+
+            resetToDefault() {
+                activeVideoData = cloneData(initialVideos);
+                this.renderScenesList();
+                this.updateActiveSceneCustomizer();
+                this.updateVideoUI();
+                this.showToast("🔄", "Scenariile au fost resetate la forma originală!");
+            },
+
+            jumpToScene(index) {
+                this.activeSceneIndex = index;
+                
+                // Calculate time offset of selected scene start
+                let offset = 0;
+                for (let i = 0; i < index; i++) {
+                    offset += activeVideoData[this.currentVid].scenes[i].duration;
+                }
+                
+                this.currentTime = offset;
+                this.renderScenesList();
+                this.updateActiveSceneCustomizer();
+                this.updateVideoUI();
+                
+                // Speak immediately if jumped manually
+                this.speakSceneVoiceover(index);
+            },
+
+            togglePlay() {
+                if (this.isPlaying) {
+                    this.pause();
+                } else {
+                    this.play();
+                }
+            },
+
+            play() {
+                this.isPlaying = true;
+                document.getElementById('btn-play-pause').textContent = "❚❚";
+                document.getElementById('sound-indicator').style.opacity = '1';
+                
+                synth.start();
+
+                // If at end, loop back
+                if (this.currentTime >= this.getTotalDuration()) {
+                    this.currentTime = 0;
+                    this.lastSpokenSceneIndex = -1;
+                }
+
+                this.timer = setInterval(() => {
+                    this.currentTime += 0.5; // tick every half-second for accuracy
+                    const totalDur = this.getTotalDuration();
+
+                    if (this.currentTime >= totalDur) {
+                        this.currentTime = totalDur;
+                        this.pause();
+                        this.showToast("🏁", "Videoclipul s-a încheiat!");
+                    }
+
+                    this.syncPlaybackWithTime();
+                }, 500);
+
+                this.showToast("▶️", "Redare video...");
+            },
+
+            pause() {
+                this.isPlaying = false;
+                document.getElementById('btn-play-pause').textContent = "▶";
+                document.getElementById('sound-indicator').style.opacity = '0.3';
+                if (this.timer) clearInterval(this.timer);
+                
+                synth.stop();
+                window.speechSynthesis.cancel(); // Stop talking
+            },
+
+            toggleMute() {
+                this.isMuted = !this.isMuted;
+                const btn = document.getElementById('btn-mute');
+                if (this.isMuted) {
+                    btn.textContent = "🔇 Voiceover Mut";
+                    btn.className = "text-red-400 hover:text-red-300 font-bold text-sm";
+                    window.speechSynthesis.cancel();
+                } else {
+                    btn.textContent = "🔊 Voiceover Activ";
+                    btn.className = "text-amber-500 hover:text-amber-400 font-bold text-sm";
+                    this.speakSceneVoiceover(this.activeSceneIndex);
+                }
+            },
+
+            scrub(value) {
+                const totalDur = this.getTotalDuration();
+                this.currentTime = (value / 100) * totalDur;
+                this.syncPlaybackWithTime();
+            },
+
+            syncPlaybackWithTime() {
+                const totalDur = this.getTotalDuration();
+                
+                // Find active scene index based on continuous timeline
+                let elapsed = 0;
+                let activeIndex = 0;
+                const scenes = activeVideoData[this.currentVid].scenes;
+
+                for (let i = 0; i < scenes.length; i++) {
+                    elapsed += scenes[i].duration;
+                    if (this.currentTime <= elapsed) {
+                        activeIndex = i;
+                        break;
+                    }
+                    if (i === scenes.length - 1) {
+                        activeIndex = i; // fallback
+                    }
+                }
+
+                // If scene changed
+                if (activeIndex !== this.activeSceneIndex) {
+                    this.activeSceneIndex = activeIndex;
+                    this.renderScenesList();
+                    this.updateActiveSceneCustomizer();
+                }
+
+                // Trigger voiceover ONCE when entering a new scene
+                if (activeIndex !== this.lastSpokenSceneIndex && this.isPlaying) {
+                    this.speakSceneVoiceover(activeIndex);
+                }
+
+                this.updateVideoUI();
+            },
+
+            speakSceneVoiceover(sceneIndex) {
+                if (this.isMuted) return;
+                this.lastSpokenSceneIndex = sceneIndex;
+                
+                window.speechSynthesis.cancel(); // kill active Speech
+
+                const scene = activeVideoData[this.currentVid].scenes[sceneIndex];
+                const utterance = new SpeechSynthesisUtterance(scene.vo);
+                utterance.lang = 'ro-RO';
+                utterance.rate = 1.0;
+                utterance.pitch = 1.1; // Elegant tone
+
+                window.speechSynthesis.speak(utterance);
+            },
+
+            updateVideoUI() {
+                const totalDur = this.getTotalDuration();
+                const scene = activeVideoData[this.currentVid].scenes[this.activeSceneIndex];
+
+                // Sync Labels & Input Timeline Scrubbers
+                document.getElementById('current-time-label').textContent = this.formatTime(this.currentTime);
+                document.getElementById('total-time-label').textContent = this.formatTime(totalDur);
+                document.getElementById('timeline-scrubber').value = (this.currentTime / totalDur) * 100;
+
+                // Update text overlays inside the simulated video phone
+                document.getElementById('caption-text').textContent = scene.caption;
+
+                // Render Scene-Specific Interactive Visual Mockups (Simulating Website Assets)
+                const visualArea = document.getElementById('screen-visuals');
+                visualArea.innerHTML = ''; // reset
+
+                // Construct component based on type
+                const view = document.createElement('div');
+                view.className = "w-full text-center space-y-4 fade-in";
+
+                if (scene.type === 'intro_nude') {
+                    view.innerHTML = `
+                        <div class="space-y-2">
+                            <h3 class="text-3xl font-serif font-bold text-amber-100 tracking-wide">Coquete</h3>
+                            <p class="text-[11px] uppercase tracking-widest text-stone-300 border-t border-b border-stone-500/50 py-1">Bianca Iacoboni Studio</p>
+                        </div>
+                        <div class="mt-6">
+                            <span class="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md animate-pulse">👑</span>
+                        </div>
+                    `;
+                } else if (scene.type === 'popup') {
+                    view.innerHTML = `
+                        <div class="bg-stone-900/95 border border-amber-500/30 p-4 rounded-2xl max-w-[260px] mx-auto shadow-2xl animate-bounce">
+                            <div class="flex justify-between items-center text-stone-400 text-xs border-b border-stone-800 pb-1.5 mb-2">
+                                <span>Cadou Special</span>
+                                <span>❌</span>
+                            </div>
+                            <p class="text-xs text-stone-300 leading-relaxed mb-3">Obține <strong>30% reducere</strong> la următorul tău machiaj!</p>
+                            <button class="w-full py-2 bg-gradient-to-r from-amber-600 to-amber-400 text-stone-950 font-extrabold text-xs rounded-lg uppercase tracking-wide shadow-md active:scale-95 transition-transform">
+                                🎁 GET 30% ACUM
+                            </button>
+                        </div>
+                    `;
+                } else if (scene.type === 'palette') {
+                    // Clicking eyeshadow circles lights them up!
+                    view.innerHTML = `
+                        <div class="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15 max-w-[260px] mx-auto">
+                            <p class="text-[10px] font-bold tracking-wider text-stone-200 mb-2.5 uppercase">Paletă Profesională Interactivă</p>
+                            <div class="grid grid-cols-4 gap-2">
+                                <span onclick="this.style.background='#d4af37'" class="w-8 h-8 rounded-full bg-stone-700 border border-white/20 inline-block cursor-pointer hover:scale-110 transition-transform shadow-inner"></span>
+                                <span onclick="this.style.background='#c58c84'" class="w-8 h-8 rounded-full bg-stone-600 border border-white/20 inline-block cursor-pointer hover:scale-110 transition-transform shadow-inner"></span>
+                                <span onclick="this.style.background='#a67c52'" class="w-8 h-8 rounded-full bg-stone-800 border border-white/20 inline-block cursor-pointer hover:scale-110 transition-transform shadow-inner"></span>
+                                <span onclick="this.style.background='#edd6c8'" class="w-8 h-8 rounded-full bg-stone-500 border border-white/20 inline-block cursor-pointer hover:scale-110 transition-transform shadow-inner"></span>
+                                <span class="w-8 h-8 rounded-full bg-[#f5ebe0] border border-white/20 inline-block"></span>
+                                <span class="w-8 h-8 rounded-full bg-[#e3d5ca] border border-white/20 inline-block"></span>
+                                <span class="w-8 h-8 rounded-full bg-[#d5bdaf] border border-white/20 inline-block"></span>
+                                <span class="w-8 h-8 rounded-full bg-[#f5ebe0] border border-white/20 inline-block"></span>
+                            </div>
+                        </div>
+                    `;
+                } else if (scene.type === 'features') {
+                    view.innerHTML = `
+                        <div class="space-y-3 max-w-[240px] mx-auto text-left">
+                            <div class="bg-white/10 p-2.5 rounded-xl border border-white/10 flex items-center space-x-2">
+                                <span class="text-amber-500">✔</span>
+                                <span class="text-xs font-bold text-stone-200">Pregătire profesională ten</span>
+                            </div>
+                            <div class="bg-white/10 p-2.5 rounded-xl border border-white/10 flex items-center space-x-2">
+                                <span class="text-amber-500">✔</span>
+                                <span class="text-xs font-bold text-stone-200">Tehnici Umbre & Lumină</span>
+                            </div>
+                        </div>
+                    `;
+                } else if (scene.type === 'form_fill') {
+                    view.innerHTML = `
+                        <div class="bg-white/95 text-stone-900 p-4 rounded-2xl max-w-[260px] mx-auto text-left space-y-2.5 shadow-2xl">
+                            <p class="text-[10px] font-extrabold text-amber-700 tracking-widest uppercase">Formular Rezervare</p>
+                            <div class="space-y-1">
+                                <div class="h-2 w-12 bg-stone-300 rounded"></div>
+                                <div class="bg-stone-100 p-1 rounded border border-stone-200 text-xs">Curs Auto-Machiaj</div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="h-2 w-16 bg-stone-300 rounded"></div>
+                                <div class="bg-stone-100 p-1 rounded border border-stone-200 text-xs">Otilia Constantin</div>
+                            </div>
+                            <button class="w-full py-2 bg-stone-950 text-white font-bold text-xs rounded-xl shadow cursor-pointer">
+                                TRIMITE SOLICITARE 📩
+                            </button>
+                        </div>
+                    `;
+                } else if (scene.type === 'intro_bride') {
+                    view.innerHTML = `
+                        <div class="space-y-2">
+                            <p class="text-xs tracking-widest text-amber-400 font-extrabold uppercase">Bridal Concept</p>
+                            <h3 class="text-4xl font-serif font-semibold text-white">Glow</h3>
+                            <p class="text-[10px] italic text-stone-300">Pachetul complet de nuntă</p>
+                        </div>
+                    `;
+                } else if (scene.type === 'features_lux') {
+                    view.innerHTML = `
+                        <div class="bg-stone-950/80 p-4 rounded-2xl border border-amber-500/20 max-w-[260px] mx-auto space-y-3">
+                            <p class="text-[9px] uppercase tracking-widest text-amber-500 font-bold">Premium Services</p>
+                            <div class="space-y-2 text-left">
+                                <p class="text-xs text-stone-200">✨ Consiliere pre-eveniment</p>
+                                <p class="text-xs text-stone-200">💄 Produse waterproof de lux</p>
+                                <p class="text-xs text-stone-200">👩‍💼 Machiaj personalizat exclusiv</p>
+                            </div>
+                        </div>
+                    `;
+                } else if (scene.type === 'dropdown_select') {
+                    view.innerHTML = `
+                        <div class="bg-stone-900 border border-stone-800 p-4 rounded-2xl max-w-[260px] mx-auto text-left space-y-2">
+                            <span class="text-[9px] text-stone-500 uppercase tracking-wider block">Serviciul Dorit</span>
+                            <div class="bg-amber-500/10 border border-amber-500 text-amber-400 p-2.5 rounded-xl text-xs font-bold animate-pulse">
+                                👰 Bridal Glow (Pachet Complet Mireasă)
+                            </div>
+                        </div>
+                    `;
+                } else if (scene.type === 'calendar_select') {
+                    view.innerHTML = `
+                        <div class="bg-stone-900 border border-stone-800 p-3 rounded-2xl max-w-[250px] mx-auto space-y-2">
+                            <span class="text-[9px] text-stone-500 uppercase tracking-wider block text-left">Selecție Dată & Oră</span>
+                            <div class="grid grid-cols-7 gap-1 text-[9px] text-center text-stone-400">
+                                <span class="font-bold text-stone-600">L</span><span class="font-bold text-stone-600">M</span><span class="font-bold text-stone-600">M</span><span class="font-bold text-stone-600">J</span><span class="font-bold text-stone-600">V</span><span class="font-bold text-stone-600">S</span><span class="font-bold text-stone-600">D</span>
+                                <span>25</span><span>26</span><span>27</span><span>28</span>
+                                <span class="bg-amber-500 text-stone-950 font-bold rounded-full w-4 h-4 inline-flex items-center justify-center mx-auto">29</span>
+                                <span>30</span><span>31</span>
+                            </div>
+                            <div class="bg-stone-800 p-1.5 rounded text-center text-xs text-stone-300 font-bold">
+                                🕒 Ora: 09:00 - Sesiune Dimineață
+                            </div>
+                        </div>
+                    `;
+                } else if (scene.type === 'success_conf') {
+                    view.innerHTML = `
+                        <div class="bg-stone-900 border-2 border-amber-500 p-5 rounded-2xl max-w-[260px] mx-auto text-center space-y-3 animate-pulse">
+                            <span class="text-3xl">🎉</span>
+                            <h4 class="text-sm font-extrabold text-amber-400 uppercase tracking-widest">Solicitare Trimisă!</h4>
+                            <p class="text-xs text-stone-300 leading-relaxed">Verifică emailul pentru confirmare.</p>
+                        </div>
+                    `;
+                }
+
+                visualArea.appendChild(view);
+            },
+
+            formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            },
+
+            copyCapCutFormat() {
+                let txt = `=======================================\n`;
+                txt += `SCENARIU PENTRU CAPCUT / SOCIAL MEDIA\n`;
+                txt += `Proiect: ${activeVideoData[this.currentVid].title}\n`;
+                txt += `=======================================\n\n`;
+
+                const scenes = activeVideoData[this.currentVid].scenes;
+                let runningTime = 0;
+
+                scenes.forEach((scene, i) => {
+                    const start = runningTime;
+                    runningTime += scene.duration;
+                    txt += `[SENA ${i + 1}] Timp: ${this.formatTime(start)} - ${this.formatTime(runningTime)} (${scene.duration} secunde)\n`;
+                    txt += `---------------------------------------\n`;
+                    txt += `💬 Text pe ecran: "${scene.caption}"\n`;
+                    txt += `🎙️ Voiceover (RO): "${scene.vo}"\n\n`;
+                });
+
+                // Write to clipboard using standard fallback
+                const tempTextArea = document.createElement('textarea');
+                tempTextArea.value = txt;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                try {
+                    document.execCommand('copy');
+                    this.showToast("📋", "Scenariul a fost copiat în clipboard!");
+                } catch (err) {
+                    console.error('Eroare la copiere text:', err);
+                }
+                document.body.removeChild(tempTextArea);
+            },
+
+            showToast(icon, message) {
+                const toast = document.getElementById('toast');
+                document.getElementById('toast-icon').textContent = icon;
+                document.getElementById('toast-message').textContent = message;
+
+                toast.className = "fixed bottom-5 right-5 bg-stone-900 text-white px-5 py-3 rounded-xl shadow-2xl border border-stone-800 translate-y-0 opacity-100 transition-all duration-300 z-50 text-sm flex items-center space-x-2";
+                
+                setTimeout(() => {
+                    toast.className = "fixed bottom-5 right-5 bg-stone-900 text-white px-5 py-3 rounded-xl shadow-2xl border border-stone-800 translate-y-20 opacity-0 transition-all duration-300 z-50 text-sm flex items-center space-x-2";
+                }, 3000);
+            }
+        };
+
+        // Window load starter
+        window.onload = function() {
+            studio.init();
+        }
+    </script>
+</body>
+</html>
