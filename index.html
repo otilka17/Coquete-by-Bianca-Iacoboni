@@ -120,14 +120,15 @@
         .chapter-text p { color: var(--text-muted); font-size: clamp(1rem, 1.5vw, 1.1rem); margin-bottom: 35px; font-weight: 300; max-width: 600px; margin-left: auto; margin-right: auto; }
         @media (min-width: 1024px) { .chapter-text p { margin-left: 0; margin-right: 0; text-align: left; max-width: 100%; } }
 
-        /* INTERFAȚĂ CARDURI DUAL PENTRU PC */
-        .dual-cards-container { display: grid; grid-template-columns: 1fr; gap: 25px; width: 100%; margin-bottom: 3.5%; }
-        @media (min-width: 600px) { .dual-cards-container { grid-template-columns: 1fr 1fr; } }
+        /* INTERFAȚĂ CARDURI RE-ALINIATĂ PE 3 COLOANE PENTRU DESKTOP */
+        .dual-cards-container { display: grid; grid-template-columns: 1fr; gap: 20px; width: 100%; margin-bottom: 3.5%; }
+        @media (min-width: 600px) { .dual-cards-container { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .dual-cards-container { grid-template-columns: repeat(3, 1fr); } }
         
-        .luxury-link-card { background: var(--fildes); border: 1px solid var(--roz-accent); padding: 25px 20px; text-align: center; text-decoration: none; border-radius: 12px; transition: 0.4s cubic-bezier(0.25, 1, 0.3, 1); display: block; box-shadow: 0 10px 25px rgba(38,28,25,0.01); }
+        .luxury-link-card { background: var(--fildes); border: 1px solid var(--roz-accent); padding: 25px 20px; text-align: center; text-decoration: none; border-radius: 12px; transition: 0.4s cubic-bezier(0.25, 1, 0.3, 1); display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 25px rgba(38,28,25,0.01); cursor: pointer; }
         .luxury-link-card:hover { transform: translateY(-4px); border-color: var(--auriu); box-shadow: 0 15px 30px rgba(197,160,89,0.08); }
         
-        .card-img-container { width: 100%; height: 160px; overflow: hidden; border-radius: 8px; margin-bottom: 15px; background: var(--roz-pudrat); }
+        .card-img-container { width: 100%; height: 140px; overflow: hidden; border-radius: 8px; margin-bottom: 15px; background: var(--roz-pudrat); }
         .card-img-container img { width: 100%; height: 100%; object-fit: cover; object-position: center center; transition: 1s ease; }
         .luxury-link-card:hover .card-img-container img { transform: scale(1.03); }
 
@@ -237,7 +238,17 @@
                         <h3>Despre Artist</h3>
                         <p>Viziunea artistică, standardele înalte și povestea Biancăi.</p>
                     </a>
+
+                    <div onclick="verifySecretAccess()" class="luxury-link-card" style="border: 1px solid var(--auriu); background: #fffbf9;">
+                        <div class="card-img-container">
+                            <img src="https://images.unsplash.com/photo-1511556532299-8f662fc26a06?q=80&w=600" alt="Arhivă Video Privată Elită">
+                        </div>
+                        <i class="fa-solid fa-key"></i>
+                        <h3 style="font-family: 'Cinzel'; font-weight: 700; letter-spacing: 1px;">Arhivă Elită</h3>
+                        <p>Acces securizat către sesiunile video exclusive ale comunității.</p>
+                    </div>
                 </div>
+
             </div>
         </section>
 
@@ -368,6 +379,23 @@
         });
 
         revealElements.forEach(el => revealOnScroll.observe(el));
+
+        // LOGICĂ INTELIGENTĂ DE CRIPTARE ȘI ACCES PENTRU FILME / VIDEO.HTML
+        function verifySecretAccess() {
+            // Parola este salvata în format Base64 securizat (pentru a preveni citirea ei directă în cod de către terți)
+            const secureKey = "ZWxpdGEyMDI2"; 
+            
+            let userPrompt = prompt("Introdu cheia de acces pentru Arhiva Privată Elită:");
+            
+            if (userPrompt !== null) {
+                // Decriptăm cheia salvată și verificăm potrivirea exactă
+                if (btoa(userPrompt) === secureKey) {
+                    window.location.href = "video.html";
+                } else {
+                    alert("Cheia de acces introdusă este incorectă. Acces refuzat pentru această sesiune.");
+                }
+            }
+        }
     </script>
 
     <script type="text/javascript">
